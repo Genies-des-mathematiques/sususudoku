@@ -52,10 +52,54 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E13ED9AE285246A100220337 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E16AC81F284C191F0009F304 /* ContentView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E13ED9AF285246A800220337 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		E13ED9B0285246AE00220337 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E13ED9B1285246B300220337 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		E13ED9B2285246BE00220337 /* Resoource */ = {
+			isa = PBXGroup;
+			children = (
+				E16AC82B284C2BBA0009F304 /* GoogleService-Info.plist */,
+				E16AC821284C19220009F304 /* Assets.xcassets */,
+				E16AC823284C19220009F304 /* Preview Content */,
+			);
+			path = Resoource;
+			sourceTree = "<group>";
+		};
 		E16AC811284C191F0009F304 = {
 			isa = PBXGroup;
 			children = (
-				E16AC81C284C191F0009F304 /* sususudoku */,
+				E16AC81D284C191F0009F304 /* sususudokuApp.swift */,
+				E13ED9B2285246BE00220337 /* Resoource */,
+				E13ED9B1285246B300220337 /* Repository */,
+				E13ED9B0285246AE00220337 /* Model */,
+				E13ED9AF285246A800220337 /* ViewModel */,
+				E13ED9AE285246A100220337 /* View */,
 				E16AC81B284C191F0009F304 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -66,18 +110,6 @@
 				E16AC81A284C191F0009F304 /* sususudoku.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		E16AC81C284C191F0009F304 /* sususudoku */ = {
-			isa = PBXGroup;
-			children = (
-				E16AC82B284C2BBA0009F304 /* GoogleService-Info.plist */,
-				E16AC81D284C191F0009F304 /* sususudokuApp.swift */,
-				E16AC81F284C191F0009F304 /* ContentView.swift */,
-				E16AC821284C19220009F304 /* Assets.xcassets */,
-				E16AC823284C19220009F304 /* Preview Content */,
-			);
-			path = sususudoku;
 			sourceTree = "<group>";
 		};
 		E16AC823284C19220009F304 /* Preview Content */ = {
