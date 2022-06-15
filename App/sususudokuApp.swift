@@ -7,6 +7,7 @@
 
 import FirebaseCore
 import SwiftUI
+import UIPilot
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
@@ -17,13 +18,25 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
 }
 
+enum AppRoute: Equatable {
+    case HomePage
+}
+
 @main
 struct sususudokuApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject private var _pilot = UIPilot(initial: AppRoute.HomePage)
 
     var body: some Scene {
         WindowGroup {
-            HomePage()
+            UIPilotHost(_pilot) { route in
+                switch route {
+                case .HomePage:
+                    return AnyView(
+                        HomePage()
+                    )
+                }
+            }
         }
     }
 }

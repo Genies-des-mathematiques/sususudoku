@@ -10,6 +10,8 @@
 		E133B81E2859D1620098D53A /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E133B81D2859D1620098D53A /* HomePage.swift */; };
 		E133B8262859E45C0098D53A /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = E133B8252859E45C0098D53A /* ButtonStyles.swift */; };
 		E133B8292859E5210098D53A /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = E133B8282859E5210098D53A /* Size.swift */; };
+		E133B82C2859F29E0098D53A /* UIPilot in Frameworks */ = {isa = PBXBuildFile; productRef = E133B82B2859F29E0098D53A /* UIPilot */; };
+		E133B82F2859F2F10098D53A /* UIPilot in Frameworks */ = {isa = PBXBuildFile; productRef = E133B82E2859F2F10098D53A /* UIPilot */; };
 		E16AC81E284C191F0009F304 /* sususudokuApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16AC81D284C191F0009F304 /* sususudokuApp.swift */; };
 		E16AC822284C19220009F304 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E16AC821284C19220009F304 /* Assets.xcassets */; };
 		E16AC825284C19220009F304 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E16AC824284C19220009F304 /* Preview Assets.xcassets */; };
@@ -45,11 +47,13 @@
 				E16AC831284C2D9E0009F304 /* FirebaseAppCheck in Frameworks */,
 				E16AC841284C2D9F0009F304 /* FirebaseStorage in Frameworks */,
 				E16AC83F284C2D9F0009F304 /* FirebaseRemoteConfigSwift in Frameworks */,
+				E133B82F2859F2F10098D53A /* UIPilot in Frameworks */,
 				E16AC835284C2D9E0009F304 /* FirebaseCrashlytics in Frameworks */,
 				E16AC833284C2D9E0009F304 /* FirebaseAuth in Frameworks */,
 				E16AC82F284C2D9E0009F304 /* FirebaseAnalyticsSwift in Frameworks */,
 				E16AC83D284C2D9F0009F304 /* FirebasePerformance in Frameworks */,
 				E16AC839284C2D9F0009F304 /* FirebaseFirestoreSwift in Frameworks */,
+				E133B82C2859F29E0098D53A /* UIPilot in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,6 +197,8 @@
 				E16AC83C284C2D9F0009F304 /* FirebasePerformance */,
 				E16AC83E284C2D9F0009F304 /* FirebaseRemoteConfigSwift */,
 				E16AC840284C2D9F0009F304 /* FirebaseStorage */,
+				E133B82B2859F29E0098D53A /* UIPilot */,
+				E133B82E2859F2F10098D53A /* UIPilot */,
 			);
 			productName = sususudoku;
 			productReference = E16AC81A284C191F0009F304 /* sususudoku.app */;
@@ -224,6 +230,8 @@
 			mainGroup = E16AC811284C191F0009F304;
 			packageReferences = (
 				E16AC82D284C2D9E0009F304 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				E133B82A2859F29E0098D53A /* XCRemoteSwiftPackageReference "UIPilot" */,
+				E133B82D2859F2F10098D53A /* XCRemoteSwiftPackageReference "UIPilot" */,
 			);
 			productRefGroup = E16AC81B284C191F0009F304 /* Products */;
 			projectDirPath = "";
@@ -480,6 +488,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E133B82A2859F29E0098D53A /* XCRemoteSwiftPackageReference "UIPilot" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/canopas/UIPilot.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		E133B82D2859F2F10098D53A /* XCRemoteSwiftPackageReference "UIPilot" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/canopas/UIPilot.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		E16AC82D284C2D9E0009F304 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -491,6 +515,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E133B82B2859F29E0098D53A /* UIPilot */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E133B82A2859F29E0098D53A /* XCRemoteSwiftPackageReference "UIPilot" */;
+			productName = UIPilot;
+		};
+		E133B82E2859F2F10098D53A /* UIPilot */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E133B82A2859F29E0098D53A /* XCRemoteSwiftPackageReference "UIPilot" */;
+			productName = UIPilot;
+		};
 		E16AC82E284C2D9E0009F304 /* FirebaseAnalyticsSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E16AC82D284C2D9E0009F304 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
