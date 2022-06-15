@@ -15,29 +15,63 @@ struct GameBoardView: View {
     private var grid: Grid = .init()
     private var cellSize: Double = 380 / 9
 
+    private let appTitle: String = "SuSuSudoku"
+    private var difficulty: String = Difficulty.Easy
     private var hintLeft: Int = 3
 
     var body: some View {
         VStack {
+            topBar
+            HStack {
+                Text("\(difficulty)")
+                Spacer()
+                pauseAndPlayButton
+            }
+            .padding()
+
             ZStack {
                 gameGrid
                 drawGridOutline
             }
-            HStack {
-                Spacer()
-                deleteButton
-                Spacer()
-                noteButton
-                Spacer()
-                hintButton
-                Spacer()
-            }
-            .frame(height: 55)
-            .padding()
+            .padding(.bottom)
+
+            gameButtons
             numberButtons
+            
+            Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Colors.Background)
+    }
+
+    private var topBar: some View {
+        HStack {
+            // back button
+            Button {} label: {
+                VStack {
+                    Image(systemName: "chevron.backward")
+                        .foregroundColor(Colors.DarkBlue)
+                }
+            }
+            
+            Spacer()
+            Text("\(appTitle)")
+                .font(.title)
+                .bold()
+                .foregroundColor(Colors.DarkBlue)
+            Spacer()
+            
+            // settings button
+            Button {} label: {
+                VStack {
+                    Image(systemName: "gearshape")
+                        .foregroundColor(Colors.DarkBlue)
+                }
+            }
+        }
+        .padding(.leading)
+        .padding(.trailing)
+        .padding(.bottom)
     }
 
     private var gameGrid: some View {
@@ -69,11 +103,49 @@ struct GameBoardView: View {
             }
         }
     }
+    
+    private var gameButtons: some View {
+        HStack {
+            Spacer()
+            deleteButton
+            Spacer()
+            noteButton
+            Spacer()
+            hintButton
+            Spacer()
+        }
+        .frame(height: 50)
+        .padding(.top)
+    }
+
+    
+    private var numberButtons: some View {
+        HStack {
+            Spacer()
+            ForEach(1 ... columnCount, id: \.self) { number in
+                Button {} label: {
+                    Text("\(number)")
+                        .font(.largeTitle)
+                        .foregroundColor(Colors.DarkBlue)
+                }
+                Spacer()
+            }
+        }
+    }
+
+    private var pauseAndPlayButton: some View {
+        Button {} label: {
+            VStack {
+                Image(systemName: "pause")
+                    .foregroundColor(.black)
+            }
+        }
+    }
 
     private var deleteButton: some View {
         Button {} label: {
             VStack {
-                Image(systemName: "xmark.circle")
+                Image(systemName: "trash")
                     .resizable()
                     .scaledToFit()
                     .foregroundColor(.black)
@@ -87,7 +159,7 @@ struct GameBoardView: View {
     private var noteButton: some View {
         Button {} label: {
             VStack {
-                Image(systemName: "square.and.pencil")
+                Image(systemName: "pencil.tip")
                     .resizable()
                     .scaledToFit()
                     .foregroundColor(.black)
@@ -123,20 +195,6 @@ struct GameBoardView: View {
                 Text("提示")
                     .foregroundColor(Color(.label))
                     .font(.footnote)
-            }
-        }
-    }
-
-    private var numberButtons: some View {
-        HStack {
-            Spacer()
-            ForEach(1 ... columnCount, id: \.self) { number in
-                Button {} label: {
-                    Text("\(number)")
-                        .font(.largeTitle)
-                        .foregroundColor(Colors.DarkBlue)
-                }
-                Spacer()
             }
         }
     }

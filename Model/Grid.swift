@@ -55,3 +55,10 @@ final class Grid: ObservableObject {
             .foregroundColor(Colors.DarkBrown)
     }
 }
+
+enum Difficulty {
+    static let Easy = "簡單"
+    static let Medium = "中等"
+    static let Hard = "困難"
+    static let Expert = "專家"
+}
