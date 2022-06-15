@@ -33,7 +33,7 @@ struct HomePage: View {
         .toolbar {
             ToolbarItem {
                 Button {} label: {
-                    Image(systemName: "plus")
+                    Image(systemName: "gearshape")
                 }
             }
         }
