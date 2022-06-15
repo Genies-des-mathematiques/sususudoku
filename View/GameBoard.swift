@@ -13,24 +13,34 @@ struct GameBoardView: View {
     private var m: Int = 3
     private var columnCount: Int = 9
     private var grid: Grid = .init()
-    private var cellSize: Double = 360 / 9
+    private var cellSize: Double = 380 / 9
 
-    let backgroundColor = Color(red: 241 / 255, green: 234 / 255, blue: 220 / 255)
-    let numberColor = Color(red: 72 / 255, green: 95 / 255, blue: 155 / 255)
+    private var hintLeft: Int = 3
 
     var body: some View {
         VStack {
             ZStack {
-                renderGameGrid
+                gameGrid
                 drawGridOutline
             }
-            renderNumberButtons
+            HStack {
+                Spacer()
+                deleteButton
+                Spacer()
+                noteButton
+                Spacer()
+                hintButton
+                Spacer()
+            }
+            .frame(height: 55)
+            .padding()
+            numberButtons
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(backgroundColor)
+        .background(Colors.Background)
     }
 
-    private var renderGameGrid: some View {
+    private var gameGrid: some View {
         VStack(spacing: -1) {
             ForEach(0 ..< columnCount) { row in
                 HStack(spacing: -1) {
@@ -47,11 +57,11 @@ struct GameBoardView: View {
 
     private var drawGridOutline: some View {
         VStack(spacing: -1) {
-            ForEach(0 ..< n) { row in
+            ForEach(0 ..< n) { _ in
                 HStack(spacing: -1) {
-                    ForEach(0 ..< m) { col in
+                    ForEach(0 ..< m) { _ in
                         Rectangle()
-                            .foregroundColor(backgroundColor.opacity(0))
+                            .foregroundColor(Colors.Background.opacity(0))
                             .frame(width: cellSize * Double(n) - 1, height: cellSize * Double(m) - 1)
                             .border(.black, width: 1.5)
                     }
@@ -60,17 +70,75 @@ struct GameBoardView: View {
         }
     }
 
-    private var renderNumberButtons: some View {
+    private var deleteButton: some View {
+        Button {} label: {
+            VStack {
+                Image(systemName: "xmark.circle")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(.black)
+                Text("清除")
+                    .foregroundColor(Color(.label))
+                    .font(.footnote)
+            }
+        }
+    }
+
+    private var noteButton: some View {
+        Button {} label: {
+            VStack {
+                Image(systemName: "square.and.pencil")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(.black)
+                Text("筆記")
+                    .foregroundColor(Color(.label))
+                    .font(.footnote)
+            }
+        }
+    }
+
+    private var hintButton: some View {
+        Button {} label: {
+            VStack {
+                ZStack {
+                    Image(systemName: "lightbulb")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(.black)
+                    Image(systemName: "circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(.white)
+                        .padding(.bottom, 12)
+                        .padding(.leading, 18)
+                    Image(systemName: "\(hintLeft).circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(Colors.DarkBlue)
+                        .padding(.bottom, 12)
+                        .padding(.leading, 18)
+                }
+
+                Text("提示")
+                    .foregroundColor(Color(.label))
+                    .font(.footnote)
+            }
+        }
+    }
+
+    private var numberButtons: some View {
         HStack {
+            Spacer()
             ForEach(1 ... columnCount, id: \.self) { number in
                 Button {} label: {
                     Text("\(number)")
                         .font(.largeTitle)
-                        .foregroundColor(numberColor)
+                        .foregroundColor(Colors.DarkBlue)
                 }
+                Spacer()
             }
         }
-        .padding()
     }
 }
 
