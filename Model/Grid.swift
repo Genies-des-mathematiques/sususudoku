@@ -56,9 +56,9 @@ final class Grid: ObservableObject {
     }
 }
 
-enum Difficulty {
-    static let Easy = "簡單"
-    static let Medium = "中等"
-    static let Hard = "困難"
-    static let Expert = "專家"
+enum Difficulty: String, CaseIterable {
+    case Easy = "簡單"
+    case Medium = "中等"
+    case Hard = "困難"
+    case Expert = "專家"
 }

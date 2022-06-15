@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F2829822860A1450027C00C /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2829812860A1450027C00C /* Grid.swift */; };
+		0F9431CA285DDEA600A3F288 /* GameBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9431C9285DDEA600A3F288 /* GameBoard.swift */; };
 		E133B81E2859D1620098D53A /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E133B81D2859D1620098D53A /* HomePage.swift */; };
 		E133B8262859E45C0098D53A /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = E133B8252859E45C0098D53A /* ButtonStyles.swift */; };
 		E133B8292859E5210098D53A /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = E133B8282859E5210098D53A /* Size.swift */; };
@@ -30,6 +32,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F2829812860A1450027C00C /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
+		0F9431C9285DDEA600A3F288 /* GameBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameBoard.swift; sourceTree = "<group>"; };
 		E133B81D2859D1620098D53A /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		E133B8252859E45C0098D53A /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
 		E133B8282859E5210098D53A /* Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
@@ -75,6 +79,7 @@
 		E133B8232859E4390098D53A /* Pages */ = {
 			isa = PBXGroup;
 			children = (
+				0F9431C9285DDEA600A3F288 /* GameBoard.swift */,
 				E133B81D2859D1620098D53A /* HomePage.swift */,
 				E14175E5285BA7630038E86D /* SettingSheet.swift */,
 			);
@@ -118,6 +123,7 @@
 		E13ED9B0285246AE00220337 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0F2829812860A1450027C00C /* Grid.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -291,6 +297,8 @@
 				E133B8262859E45C0098D53A /* ButtonStyles.swift in Sources */,
 				E133B81E2859D1620098D53A /* HomePage.swift in Sources */,
 				E133B8292859E5210098D53A /* Size.swift in Sources */,
+				0F2829822860A1450027C00C /* Grid.swift in Sources */,
+				0F9431CA285DDEA600A3F288 /* GameBoard.swift in Sources */,
 				E16AC81E284C191F0009F304 /* sususudokuApp.swift in Sources */,
 				E14175E6285BA7630038E86D /* SettingSheet.swift in Sources */,
 				E14175E8285BB4B00038E86D /* SettingItem.swift in Sources */,
