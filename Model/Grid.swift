@@ -10,7 +10,6 @@ import SwiftUI
 
 final class Grid: ObservableObject {
     @Published private var grid: [[Int]] = .init()
-    let systemNumberColor = Color(red: 86 / 255, green: 63 / 255, blue: 46 / 255)
 
     let sudokuAnswer = [
         [4, 6, 7, 1, 5, 8, 3, 2, 9],
@@ -43,16 +42,16 @@ final class Grid: ObservableObject {
         self.grid = sudoku
 //        self.grid = sudokuAnswer
     }
-    
+
     func render(row: Int, col: Int) -> Text {
         let value: Int = grid[row][col]
-        
+
         if value == 0 {
             return Text("")
         }
 
         return Text("\(value)")
             .font(.title)
-            .foregroundColor(systemNumberColor)
+            .foregroundColor(Colors.DarkBrown)
     }
 }
