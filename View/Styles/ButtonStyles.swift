@@ -15,7 +15,7 @@ struct ActivityButtonStyle: ButtonStyle {
             .background(.blue)
             .foregroundColor(.white)
             .clipShape(Capsule())
-            .shadow(color: .gray, radius: 2, x: 0, y: 2)
+            .shadow(color: Color("Shadow"), radius: 2, x: 0, y: 2)
             .scaleEffect(configuration.isPressed ? 1.2 : 1)
             .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
     }
