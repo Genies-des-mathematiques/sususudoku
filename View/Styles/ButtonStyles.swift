@@ -21,6 +21,7 @@ struct ActivityButtonStyle: ButtonStyle {
     }
 }
 
+#if DEBUG
 struct ButtonStyles_Previews: PreviewProvider {
     static var previews: some View {
         Button("ActivityButtonStyle") {}
@@ -28,3 +29,4 @@ struct ButtonStyles_Previews: PreviewProvider {
             .previewLayout(.sizeThatFits)
     }
 }
+#endif
