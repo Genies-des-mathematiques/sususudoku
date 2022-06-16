@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HomePage: View {
+    @State private var _isShowingSettingSheet = false
+
     var body: some View {
         VStack {
             GeometryReader { g in
@@ -32,9 +34,16 @@ struct HomePage: View {
         }
         .toolbar {
             ToolbarItem {
-                Button {} label: {
+                Button {
+                    _isShowingSettingSheet = true
+                } label: {
                     Image(systemName: "gearshape")
                 }
+            }
+        }
+        .sheet(isPresented: $_isShowingSettingSheet) {
+            NavigationView {
+                SettingSheet()
             }
         }
         .background(Color("AppBackground"))

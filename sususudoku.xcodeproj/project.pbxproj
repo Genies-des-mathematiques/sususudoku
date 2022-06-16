@@ -12,6 +12,7 @@
 		E133B8292859E5210098D53A /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = E133B8282859E5210098D53A /* Size.swift */; };
 		E133B82C2859F29E0098D53A /* UIPilot in Frameworks */ = {isa = PBXBuildFile; productRef = E133B82B2859F29E0098D53A /* UIPilot */; };
 		E133B82F2859F2F10098D53A /* UIPilot in Frameworks */ = {isa = PBXBuildFile; productRef = E133B82E2859F2F10098D53A /* UIPilot */; };
+		E14175E6285BA7630038E86D /* SettingSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14175E5285BA7630038E86D /* SettingSheet.swift */; };
 		E16AC81E284C191F0009F304 /* sususudokuApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16AC81D284C191F0009F304 /* sususudokuApp.swift */; };
 		E16AC822284C19220009F304 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E16AC821284C19220009F304 /* Assets.xcassets */; };
 		E16AC825284C19220009F304 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E16AC824284C19220009F304 /* Preview Assets.xcassets */; };
@@ -31,6 +32,7 @@
 		E133B81D2859D1620098D53A /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		E133B8252859E45C0098D53A /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
 		E133B8282859E5210098D53A /* Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
+		E14175E5285BA7630038E86D /* SettingSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSheet.swift; sourceTree = "<group>"; };
 		E16AC81A284C191F0009F304 /* sususudoku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sususudoku.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E16AC81D284C191F0009F304 /* sususudokuApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sususudokuApp.swift; sourceTree = "<group>"; };
 		E16AC821284C19220009F304 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				E133B81D2859D1620098D53A /* HomePage.swift */,
+				E14175E5285BA7630038E86D /* SettingSheet.swift */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 				E133B81E2859D1620098D53A /* HomePage.swift in Sources */,
 				E133B8292859E5210098D53A /* Size.swift in Sources */,
 				E16AC81E284C191F0009F304 /* sususudokuApp.swift in Sources */,
+				E14175E6285BA7630038E86D /* SettingSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
