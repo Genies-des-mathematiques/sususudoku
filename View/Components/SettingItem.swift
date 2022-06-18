@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SettiingItem: View {
+struct SettingItem: View {
     let iconName: String
     let itemName: String
     let iconColor: Color
@@ -24,7 +24,7 @@ struct SettiingItem: View {
 #if DEBUG
 struct SettingItem_Previews: PreviewProvider {
     static var previews: some View {
-        SettiingItem(iconName: "gearshape", itemName: "設定", iconColor: .red)
+        SettingItem(iconName: "gearshape", itemName: "設定", iconColor: .red)
             .previewLayout(.sizeThatFits)
     }
 }

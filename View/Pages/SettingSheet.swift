@@ -13,12 +13,12 @@ struct SettingSheet: View {
     var body: some View {
         List {
             Section {
-                SettiingItem(iconName: "gearshape", itemName: "設定", iconColor: .red)
-                SettiingItem(iconName: "graduationcap", itemName: "遊玩方式", iconColor: .orange)
+                SettingItem(iconName: "gearshape", itemName: "設定", iconColor: .red)
+                SettingItem(iconName: "graduationcap", itemName: "遊玩方式", iconColor: .orange)
             }
             Section {
-                SettiingItem(iconName: "info.circle", itemName: "關於遊戲", iconColor: .blue)
-                SettiingItem(iconName: "questionmark.circle", itemName: "幫助", iconColor: .green)
+                SettingItem(iconName: "info.circle", itemName: "關於遊戲", iconColor: .blue)
+                SettingItem(iconName: "questionmark.circle", itemName: "幫助", iconColor: .green)
             }
         }
         .listStyle(GroupedListStyle())
