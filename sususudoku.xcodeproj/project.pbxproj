@@ -7,8 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E133B81E2859D1620098D53A /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E133B81D2859D1620098D53A /* HomePage.swift */; };
+		E133B8262859E45C0098D53A /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = E133B8252859E45C0098D53A /* ButtonStyles.swift */; };
+		E133B8292859E5210098D53A /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = E133B8282859E5210098D53A /* Size.swift */; };
+		E133B82C2859F29E0098D53A /* UIPilot in Frameworks */ = {isa = PBXBuildFile; productRef = E133B82B2859F29E0098D53A /* UIPilot */; };
+		E133B82F2859F2F10098D53A /* UIPilot in Frameworks */ = {isa = PBXBuildFile; productRef = E133B82E2859F2F10098D53A /* UIPilot */; };
+		E14175E6285BA7630038E86D /* SettingSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14175E5285BA7630038E86D /* SettingSheet.swift */; };
+		E14175E8285BB4B00038E86D /* SettingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14175E7285BB4B00038E86D /* SettingItem.swift */; };
 		E16AC81E284C191F0009F304 /* sususudokuApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16AC81D284C191F0009F304 /* sususudokuApp.swift */; };
-		E16AC820284C191F0009F304 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16AC81F284C191F0009F304 /* ContentView.swift */; };
 		E16AC822284C19220009F304 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E16AC821284C19220009F304 /* Assets.xcassets */; };
 		E16AC825284C19220009F304 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E16AC824284C19220009F304 /* Preview Assets.xcassets */; };
 		E16AC82C284C2BBA0009F304 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E16AC82B284C2BBA0009F304 /* GoogleService-Info.plist */; };
@@ -24,9 +30,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E133B81D2859D1620098D53A /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
+		E133B8252859E45C0098D53A /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
+		E133B8282859E5210098D53A /* Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
+		E14175E5285BA7630038E86D /* SettingSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSheet.swift; sourceTree = "<group>"; };
+		E14175E7285BB4B00038E86D /* SettingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingItem.swift; sourceTree = "<group>"; };
 		E16AC81A284C191F0009F304 /* sususudoku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sususudoku.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E16AC81D284C191F0009F304 /* sususudokuApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sususudokuApp.swift; sourceTree = "<group>"; };
-		E16AC81F284C191F0009F304 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E16AC821284C19220009F304 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E16AC824284C19220009F304 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E16AC82B284C2BBA0009F304 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -41,21 +51,59 @@
 				E16AC831284C2D9E0009F304 /* FirebaseAppCheck in Frameworks */,
 				E16AC841284C2D9F0009F304 /* FirebaseStorage in Frameworks */,
 				E16AC83F284C2D9F0009F304 /* FirebaseRemoteConfigSwift in Frameworks */,
+				E133B82F2859F2F10098D53A /* UIPilot in Frameworks */,
 				E16AC835284C2D9E0009F304 /* FirebaseCrashlytics in Frameworks */,
 				E16AC833284C2D9E0009F304 /* FirebaseAuth in Frameworks */,
 				E16AC82F284C2D9E0009F304 /* FirebaseAnalyticsSwift in Frameworks */,
 				E16AC83D284C2D9F0009F304 /* FirebasePerformance in Frameworks */,
 				E16AC839284C2D9F0009F304 /* FirebaseFirestoreSwift in Frameworks */,
+				E133B82C2859F29E0098D53A /* UIPilot in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E133B8222859E42B0098D53A /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				E14175E7285BB4B00038E86D /* SettingItem.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		E133B8232859E4390098D53A /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				E133B81D2859D1620098D53A /* HomePage.swift */,
+				E14175E5285BA7630038E86D /* SettingSheet.swift */,
+			);
+			path = Pages;
+			sourceTree = "<group>";
+		};
+		E133B8242859E4460098D53A /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				E133B8252859E45C0098D53A /* ButtonStyles.swift */,
+			);
+			path = Styles;
+			sourceTree = "<group>";
+		};
+		E133B8272859E50D0098D53A /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E133B8282859E5210098D53A /* Size.swift */,
+			);
+			path = extensions;
+			sourceTree = "<group>";
+		};
 		E13ED9AE285246A100220337 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				E16AC81F284C191F0009F304 /* ContentView.swift */,
+				E133B8272859E50D0098D53A /* extensions */,
+				E133B8242859E4460098D53A /* Styles */,
+				E133B8232859E4390098D53A /* Pages */,
+				E133B8222859E42B0098D53A /* Components */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -81,14 +129,14 @@
 			path = Repository;
 			sourceTree = "<group>";
 		};
-		E13ED9B2285246BE00220337 /* Resoource */ = {
+		E13ED9B2285246BE00220337 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
 				E16AC82B284C2BBA0009F304 /* GoogleService-Info.plist */,
 				E16AC821284C19220009F304 /* Assets.xcassets */,
 				E16AC823284C19220009F304 /* Preview Content */,
 			);
-			path = Resoource;
+			path = Resource;
 			sourceTree = "<group>";
 		};
 		E13ED9B3285247A500220337 /* App */ = {
@@ -103,7 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				E13ED9B3285247A500220337 /* App */,
-				E13ED9B2285246BE00220337 /* Resoource */,
+				E13ED9B2285246BE00220337 /* Resource */,
 				E13ED9B1285246B300220337 /* Repository */,
 				E13ED9B0285246AE00220337 /* Model */,
 				E13ED9AF285246A800220337 /* ViewModel */,
@@ -155,6 +203,8 @@
 				E16AC83C284C2D9F0009F304 /* FirebasePerformance */,
 				E16AC83E284C2D9F0009F304 /* FirebaseRemoteConfigSwift */,
 				E16AC840284C2D9F0009F304 /* FirebaseStorage */,
+				E133B82B2859F29E0098D53A /* UIPilot */,
+				E133B82E2859F2F10098D53A /* UIPilot */,
 			);
 			productName = sususudoku;
 			productReference = E16AC81A284C191F0009F304 /* sususudoku.app */;
@@ -186,6 +236,8 @@
 			mainGroup = E16AC811284C191F0009F304;
 			packageReferences = (
 				E16AC82D284C2D9E0009F304 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				E133B82A2859F29E0098D53A /* XCRemoteSwiftPackageReference "UIPilot" */,
+				E133B82D2859F2F10098D53A /* XCRemoteSwiftPackageReference "UIPilot" */,
 			);
 			productRefGroup = E16AC81B284C191F0009F304 /* Products */;
 			projectDirPath = "";
@@ -236,8 +288,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E16AC820284C191F0009F304 /* ContentView.swift in Sources */,
+				E133B8262859E45C0098D53A /* ButtonStyles.swift in Sources */,
+				E133B81E2859D1620098D53A /* HomePage.swift in Sources */,
+				E133B8292859E5210098D53A /* Size.swift in Sources */,
 				E16AC81E284C191F0009F304 /* sususudokuApp.swift in Sources */,
+				E14175E6285BA7630038E86D /* SettingSheet.swift in Sources */,
+				E14175E8285BB4B00038E86D /* SettingItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,12 +421,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"sususudoku/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Resource/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -393,12 +450,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"sususudoku/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Resource/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -438,6 +496,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E133B82A2859F29E0098D53A /* XCRemoteSwiftPackageReference "UIPilot" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/canopas/UIPilot.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		E133B82D2859F2F10098D53A /* XCRemoteSwiftPackageReference "UIPilot" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/canopas/UIPilot.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		E16AC82D284C2D9E0009F304 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -449,6 +523,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E133B82B2859F29E0098D53A /* UIPilot */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E133B82A2859F29E0098D53A /* XCRemoteSwiftPackageReference "UIPilot" */;
+			productName = UIPilot;
+		};
+		E133B82E2859F2F10098D53A /* UIPilot */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E133B82A2859F29E0098D53A /* XCRemoteSwiftPackageReference "UIPilot" */;
+			productName = UIPilot;
+		};
 		E16AC82E284C2D9E0009F304 /* FirebaseAnalyticsSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E16AC82D284C2D9E0009F304 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
