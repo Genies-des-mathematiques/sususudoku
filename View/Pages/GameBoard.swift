@@ -8,21 +8,29 @@
 import SwiftUI
 
 struct GameBoardView: View {
-    private let appTitle = Constants.appTitle
-    private let columnCount = 3
-    private let rowCount = 3
-    private let difficulty = Difficulty.Easy
+    private let _columnCount: Int
+    private let _rowCount: Int
+    private let _size: Int
+    private let _difficulty: Difficulty
+    private let _gameStart = GameStatus(status: "Play", displayIconName: "pause")
+    private let _gamePause = GameStatus(status: "Pause", displayIconName: "play.fill")
 
-    private var gameStatus = GameStatus.Pause
-    private var hintLeft = 3
+    private var _gameStatus: GameStatus
+    private var _hintLeft = 3
+
+    init(_ columnCount: Int, _ rowCount: Int, _ difficulty: Difficulty) {
+        _columnCount = columnCount
+        _rowCount = rowCount
+        _size = _columnCount * _rowCount
+        _difficulty = difficulty
+        _gameStatus = _gameStart
+    }
 
     var body: some View {
-        let size = columnCount * rowCount
-
         VStack {
-            TopBar(appTitle: appTitle)
+            TopBar()
 
-            GameGrid(difficulty: difficulty, gameStatus: gameStatus, columnCount: columnCount, rowCount: rowCount)
+            GameGrid(_difficulty, _columnCount, _rowCount, _gameStatus, Grid())
 
             // game buttons
             HStack {
@@ -33,9 +41,9 @@ struct GameBoardView: View {
                         Image(systemName: "trash")
                             .resizable()
                             .scaledToFit()
-                            .foregroundColor(.black)
+                            .foregroundColor(Color("GameButton"))
                         Text("清除")
-                            .foregroundColor(Color(.label))
+                            .foregroundColor(Color("GameButton"))
                             .font(.footnote)
                     }
                 }
@@ -47,9 +55,9 @@ struct GameBoardView: View {
                         Image(systemName: "pencil.tip")
                             .resizable()
                             .scaledToFit()
-                            .foregroundColor(.black)
+                            .foregroundColor(Color("GameButton"))
                         Text("筆記")
-                            .foregroundColor(Color(.label))
+                            .foregroundColor(Color("GameButton"))
                             .font(.footnote)
                     }
                 }
@@ -62,14 +70,14 @@ struct GameBoardView: View {
                             Image(systemName: "lightbulb")
                                 .resizable()
                                 .scaledToFit()
-                                .foregroundColor(.black)
+                                .foregroundColor(Color("GameButton"))
                             Image(systemName: "circle.fill")
                                 .resizable()
                                 .scaledToFit()
                                 .foregroundColor(Color("AppBackground"))
                                 .padding(.bottom, 12)
                                 .padding(.leading, 18)
-                            Image(systemName: "\(hintLeft).circle.fill")
+                            Image(systemName: "\(_hintLeft).circle.fill")
                                 .resizable()
                                 .scaledToFit()
                                 .foregroundColor(Color("AppButton"))
@@ -78,7 +86,7 @@ struct GameBoardView: View {
                         }
 
                         Text("提示")
-                            .foregroundColor(Color(.label))
+                            .foregroundColor(Color("GameButton"))
                             .font(.footnote)
                     }
                 }
@@ -91,7 +99,7 @@ struct GameBoardView: View {
             // number buttons
             HStack {
                 Spacer()
-                ForEach(1 ... size, id: \.self) { number in
+                ForEach(1 ... _size, id: \.self) { number in
                     Button {} label: {
                         Text("\(number)")
                             .font(.largeTitle)
@@ -108,8 +116,6 @@ struct GameBoardView: View {
 }
 
 struct TopBar: View {
-    let appTitle: String
-
     var body: some View {
         HStack {
             // back button
@@ -122,7 +128,7 @@ struct TopBar: View {
             Spacer()
 
             // app title label
-            Text(appTitle)
+            Text(Constants.appTitle)
                 .font(.title)
                 .bold()
                 .foregroundColor(Color("AppTitle"))
@@ -143,27 +149,36 @@ struct TopBar: View {
 }
 
 struct GameGrid: View {
-    let difficulty: Difficulty
-    let gameStatus: GameStatus
-    let columnCount: Int
-    let rowCount: Int
-    let grid = Grid.init()
+    private let _difficulty: Difficulty
+    private let _columnCount: Int
+    private let _rowCount: Int
+    private var _gameStatus: GameStatus
+    private let _grid: Grid
+    private let _size: Int
+    private let _cellSize: Double
+
+    init(_ difficulty: Difficulty, _ columnCount: Int, _ rowCount: Int, _ gameStatus: GameStatus, _ grid: Grid) {
+        _difficulty = difficulty
+        _columnCount = columnCount
+        _rowCount = rowCount
+        _gameStatus = gameStatus
+        _grid = grid
+        _size = _columnCount * _rowCount
+        _cellSize = Double(UIScreen.screenWidth) / Double(_size)
+    }
 
     var body: some View {
-        let size = columnCount * rowCount
-        let cellSize = Double(UIScreen.screenWidth) / Double(size)
-
         VStack {
             // game status
             HStack {
-                Text(difficulty.rawValue)
+                Text(_difficulty.rawValue)
                 Spacer()
 
                 // pause and play button
                 Button {} label: {
                     VStack {
-                        Image(systemName: gameStatus.rawValue)
-                            .foregroundColor(.black)
+                        Image(systemName: _gameStatus.displayIcon())
+                            .foregroundColor(Color("GameButton"))
                     }
                 }
             }
@@ -174,13 +189,13 @@ struct GameGrid: View {
             ZStack {
                 // fill grid value
                 VStack(spacing: -1) {
-                    ForEach(0 ..< size, id: \.self) { row in
+                    ForEach(0 ..< _size, id: \.self) { row in
                         HStack(spacing: -1) {
-                            ForEach(0 ..< size, id: \.self) { col in
-                                Text("\(grid.render(rowIndex: row, columnIndex: col))")
+                            ForEach(0 ..< _size, id: \.self) { col in
+                                Text("\(_grid.render(rowIndex: row, columnIndex: col))")
                                     .font(.title)
                                     .foregroundColor(Color("AppNumber"))
-                                    .frame(width: cellSize, height: cellSize)
+                                    .frame(width: _cellSize, height: _cellSize)
                                     .border(.gray, width: 1)
                                     .padding(.all, 0)
                             }
@@ -190,12 +205,14 @@ struct GameGrid: View {
 
                 // draw grid outline
                 VStack(spacing: -1) {
-                    ForEach(0 ..< columnCount, id: \.self) { _ in
+                    ForEach(0 ..< _columnCount, id: \.self) { _ in
                         HStack(spacing: -1) {
-                            ForEach(0 ..< rowCount, id: \.self) { _ in
+                            ForEach(0 ..< _rowCount, id: \.self) { _ in
                                 Rectangle()
                                     .foregroundColor(Color("AppBackground").opacity(0))
-                                    .frame(width: cellSize * Double(columnCount) - 1, height: cellSize * Double(rowCount) - 1)
+                                    .frame(
+                                        width: _cellSize * Double(_columnCount) - 1,
+                                        height: _cellSize * Double(_rowCount) - 1)
                                     .border(.black, width: 1.5)
                             }
                         }
@@ -207,13 +224,22 @@ struct GameGrid: View {
     }
 }
 
-enum GameStatus: String, CaseIterable {
-    case Pause = "pause"
-    case Play = "play.fill"
+struct GameStatus {
+    private let _status: String
+    private let _displayIconName: String
+
+    init(status: String, displayIconName: String) {
+        _status = status
+        _displayIconName = displayIconName
+    }
+
+    func displayIcon() -> String {
+        return _displayIconName
+    }
 }
 
 struct GameBoardView_Previews: PreviewProvider {
     static var previews: some View {
-        GameBoardView()
+        GameBoardView(3, 3, Difficulty.Easy)
     }
 }
