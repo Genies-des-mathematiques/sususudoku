@@ -6,10 +6,9 @@
 //
 
 import Foundation
-import SwiftUI
 
-final class Grid: ObservableObject {
-    @Published private var grid: [[Int]] = .init()
+final class Grid {
+    private var grid: [[Int]]
 
     let sudokuAnswer = [
         [4, 6, 7, 1, 5, 8, 3, 2, 9],
@@ -35,24 +34,12 @@ final class Grid: ObservableObject {
     ]
 
     init() {
-//        self.grid = Array(
-//            repeating: Array(repeating: 0, count: 9),
-//            count: 9
-//        )
         self.grid = sudoku
 //        self.grid = sudokuAnswer
     }
 
-    func render(row: Int, col: Int) -> Text {
-        let value: Int = grid[row][col]
-
-        if value == 0 {
-            return Text("")
-        }
-
-        return Text("\(value)")
-            .font(.title)
-            .foregroundColor(Colors.DarkBrown)
+    func render(rowIndex: Int, columnIndex: Int) -> Int {
+        return grid[rowIndex][columnIndex]
     }
 }
 
