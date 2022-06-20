@@ -20,6 +20,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 enum AppRoute: Equatable {
     case HomePage
+    case GameBoardPage
 }
 
 @main
@@ -34,6 +35,10 @@ struct sususudokuApp: App {
                 case .HomePage:
                     return AnyView(
                         HomePage()
+                    )
+                case .GameBoardPage:
+                    return AnyView(
+                        GameBoardPage(3, 3, Difficulty.Easy)
                     )
                 }
             }

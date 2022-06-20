@@ -7,7 +7,9 @@
 
 import SwiftUI
 
-struct GameBoardView: View {
+struct GameBoardPage: View {
+    @State private var _isShowingSettingSheet = false
+
     private let _columnCount: Int
     private let _rowCount: Int
     private let _size: Int
@@ -28,8 +30,6 @@ struct GameBoardView: View {
 
     var body: some View {
         VStack {
-            TopBar()
-
             GameGrid(_difficulty, _columnCount, _rowCount, _gameStatus, Grid())
 
             // game buttons
@@ -105,43 +105,38 @@ struct GameBoardView: View {
                 }
             }
             .padding(.horizontal)
-            
+
             // need a spacer to push everything to the top
             Spacer()
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color("AppBackground"))
-    }
-}
-
-struct TopBar: View {
-    var body: some View {
-        HStack {
-            // back button
-            Button {} label: {
-                VStack {
-                    Image(systemName: "chevron.backward")
-                        .foregroundColor(Color("AppButton"))
-                }
-            }
-
+        .toolbar {
             // app title label
-            Text(Constants.appTitle)
-                .font(.title)
-                .bold()
-                .foregroundColor(Color("AppTitle"))
-                .frame(maxWidth: .infinity)
-
+            ToolbarItem(placement: .principal) {
+                Text(Constants.appTitle)
+                    .font(.title)
+                    .bold()
+                    .foregroundColor(Color("AppTitle"))
+                    .frame(maxWidth: .infinity)
+            }
             // settings button
-            Button {} label: {
-                VStack {
-                    Image(systemName: "gearshape")
-                        .foregroundColor(Color("AppButton"))
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    _isShowingSettingSheet = true
+                } label: {
+                    VStack {
+                        Image(systemName: "gearshape")
+                            .foregroundColor(Color("AppButton"))
+                    }
+                }
+                .sheet(isPresented: $_isShowingSettingSheet) {
+                    NavigationView {
+                        SettingSheet()
+                    }
                 }
             }
         }
-        .padding(.horizontal)
-        .padding(.bottom)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color("AppBackground"))
     }
 }
 
@@ -169,7 +164,7 @@ struct GameGrid: View {
             // game status
             HStack {
                 Text(_difficulty.rawValue)
-                
+
                 // need a spacer to push the elements aside
                 Spacer()
 
@@ -190,11 +185,21 @@ struct GameGrid: View {
                     ForEach(0 ..< _size, id: \.self) { row in
                         HStack(spacing: -1) {
                             ForEach(0 ..< _size, id: \.self) { col in
-                                Text("\(_grid.render(rowIndex: row, columnIndex: col))")
-                                    .font(.title)
-                                    .foregroundColor(Color("AppNumber"))
-                                    .frame(width: _cellSize, height: _cellSize)
-                                    .border(.gray, width: 1)
+                                let value = _grid.render(rowIndex: row, columnIndex: col)
+                                if value == 0 {
+                                    Text("")
+                                        .font(.title)
+                                        .foregroundColor(Color("AppNumber"))
+                                        .frame(width: _cellSize, height: _cellSize)
+                                        .border(Color("GameGridLine"), width: 1)
+                                }
+                                else {
+                                    Text("\(value)")
+                                        .font(.title)
+                                        .foregroundColor(Color("AppNumber"))
+                                        .frame(width: _cellSize, height: _cellSize)
+                                        .border(Color("GameGridLine"), width: 1)
+                                }
                             }
                         }
                     }
@@ -235,8 +240,10 @@ struct GameStatus {
     }
 }
 
+#if DEBUG
 struct GameBoardView_Previews: PreviewProvider {
     static var previews: some View {
-        GameBoardView(3, 3, Difficulty.Easy)
+        GameBoardPage(3, 3, Difficulty.Easy)
     }
 }
+#endif

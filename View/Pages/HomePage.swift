@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import UIPilot
 
 struct HomePage: View {
     @State private var _isShowingSettingSheet = false
+    @EnvironmentObject private var _pilot: UIPilot<AppRoute>
 
     var body: some View {
         VStack {
@@ -19,7 +21,9 @@ struct HomePage: View {
                         Text(Constants.appTitle)
                             .font(.system(size: g.size.height > g.size.width ? g.size.width * 0.1 : g.size.height * 0.1))
                             .fontWeight(.black)
-                        Button {} label: {
+                        Button {
+                            _pilot.push(.GameBoardPage)
+                        } label: {
                             Text("新遊戲")
                                 .foregroundColor(.white)
                         }
