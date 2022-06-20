@@ -16,7 +16,7 @@ struct HomePage: View {
                 ZStack {
                     Circle().strokeBorder(.clear, lineWidth: 0)
                     VStack {
-                        Text("SuSuSudoku")
+                        Text(Constants.appTitle)
                             .font(.system(size: g.size.height > g.size.width ? g.size.width * 0.1 : g.size.height * 0.1))
                             .fontWeight(.black)
                         Button {} label: {

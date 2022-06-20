@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct GameBoardView: View {
-    private let appTitle = "SuSuSudoku"
-    private let screenWidth = 380
+    private let appTitle = Constants.appTitle
     private let columnCount = 3
     private let rowCount = 3
     private let difficulty = Difficulty.Easy
@@ -23,7 +22,7 @@ struct GameBoardView: View {
         VStack {
             TopBar(appTitle: appTitle)
 
-            GameGrid(difficulty: difficulty, gameStatus: gameStatus, screenWidth: screenWidth, columnCount: columnCount, rowCount: rowCount)
+            GameGrid(difficulty: difficulty, gameStatus: gameStatus, columnCount: columnCount, rowCount: rowCount)
 
             // game buttons
             HStack {
@@ -67,13 +66,13 @@ struct GameBoardView: View {
                             Image(systemName: "circle.fill")
                                 .resizable()
                                 .scaledToFit()
-                                .foregroundColor(.white)
+                                .foregroundColor(Color("AppBackground"))
                                 .padding(.bottom, 12)
                                 .padding(.leading, 18)
                             Image(systemName: "\(hintLeft).circle.fill")
                                 .resizable()
                                 .scaledToFit()
-                                .foregroundColor(Colors.DarkBlue)
+                                .foregroundColor(Color("AppButton"))
                                 .padding(.bottom, 12)
                                 .padding(.leading, 18)
                         }
@@ -96,7 +95,7 @@ struct GameBoardView: View {
                     Button {} label: {
                         Text("\(number)")
                             .font(.largeTitle)
-                            .foregroundColor(Colors.DarkBlue)
+                            .foregroundColor(Color("AppButton"))
                     }
                     Spacer()
                 }
@@ -104,7 +103,7 @@ struct GameBoardView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Colors.Background)
+        .background(Color("AppBackground"))
     }
 }
 
@@ -117,23 +116,23 @@ struct TopBar: View {
             Button {} label: {
                 VStack {
                     Image(systemName: "chevron.backward")
-                        .foregroundColor(Colors.DarkBlue)
+                        .foregroundColor(Color("AppButton"))
                 }
             }
             Spacer()
 
-            // app title lable
-            Text("\(appTitle)")
+            // app title label
+            Text(appTitle)
                 .font(.title)
                 .bold()
-                .foregroundColor(Colors.DarkBlue)
+                .foregroundColor(Color("AppTitle"))
             Spacer()
 
             // settings button
             Button {} label: {
                 VStack {
                     Image(systemName: "gearshape")
-                        .foregroundColor(Colors.DarkBlue)
+                        .foregroundColor(Color("AppButton"))
                 }
             }
         }
@@ -146,14 +145,13 @@ struct TopBar: View {
 struct GameGrid: View {
     let difficulty: Difficulty
     let gameStatus: GameStatus
-    let screenWidth: Int
     let columnCount: Int
     let rowCount: Int
     let grid = Grid.init()
 
     var body: some View {
         let size = columnCount * rowCount
-        let cellSize = Double(screenWidth) / Double(size)
+        let cellSize = Double(UIScreen.screenWidth) / Double(size)
 
         VStack {
             // game status
@@ -179,7 +177,9 @@ struct GameGrid: View {
                     ForEach(0 ..< size, id: \.self) { row in
                         HStack(spacing: -1) {
                             ForEach(0 ..< size, id: \.self) { col in
-                                self.grid.render(row: row, col: col)
+                                Text("\(grid.render(rowIndex: row, columnIndex: col))")
+                                    .font(.title)
+                                    .foregroundColor(Color("AppNumber"))
                                     .frame(width: cellSize, height: cellSize)
                                     .border(.gray, width: 1)
                                     .padding(.all, 0)
@@ -194,7 +194,7 @@ struct GameGrid: View {
                         HStack(spacing: -1) {
                             ForEach(0 ..< rowCount, id: \.self) { _ in
                                 Rectangle()
-                                    .foregroundColor(Colors.Background.opacity(0))
+                                    .foregroundColor(Color("AppBackground").opacity(0))
                                     .frame(width: cellSize * Double(columnCount) - 1, height: cellSize * Double(rowCount) - 1)
                                     .border(.black, width: 1.5)
                             }

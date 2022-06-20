@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0F2829822860A1450027C00C /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2829812860A1450027C00C /* Grid.swift */; };
+		0F2829862860AD5F0027C00C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2829852860AD5F0027C00C /* Constants.swift */; };
 		0F9431CA285DDEA600A3F288 /* GameBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9431C9285DDEA600A3F288 /* GameBoard.swift */; };
 		E133B81E2859D1620098D53A /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E133B81D2859D1620098D53A /* HomePage.swift */; };
 		E133B8262859E45C0098D53A /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = E133B8252859E45C0098D53A /* ButtonStyles.swift */; };
@@ -33,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		0F2829812860A1450027C00C /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
+		0F2829852860AD5F0027C00C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0F9431C9285DDEA600A3F288 /* GameBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameBoard.swift; sourceTree = "<group>"; };
 		E133B81D2859D1620098D53A /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
 		E133B8252859E45C0098D53A /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				E133B8242859E4460098D53A /* Styles */,
 				E133B8232859E4390098D53A /* Pages */,
 				E133B8222859E42B0098D53A /* Components */,
+				0F2829852860AD5F0027C00C /* Constants.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 				E16AC81E284C191F0009F304 /* sususudokuApp.swift in Sources */,
 				E14175E6285BA7630038E86D /* SettingSheet.swift in Sources */,
 				E14175E8285BB4B00038E86D /* SettingItem.swift in Sources */,
+				0F2829862860AD5F0027C00C /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
