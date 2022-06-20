@@ -34,7 +34,6 @@ struct GameBoardView: View {
 
             // game buttons
             HStack {
-                Spacer()
                 // delete button
                 Button {} label: {
                     VStack {
@@ -47,7 +46,7 @@ struct GameBoardView: View {
                             .font(.footnote)
                     }
                 }
-                Spacer()
+                .frame(maxWidth: .infinity)
 
                 // note button
                 Button {} label: {
@@ -61,7 +60,7 @@ struct GameBoardView: View {
                             .font(.footnote)
                     }
                 }
-                Spacer()
+                .frame(maxWidth: .infinity)
 
                 // hint button
                 Button {} label: {
@@ -90,24 +89,24 @@ struct GameBoardView: View {
                             .font(.footnote)
                     }
                 }
-                Spacer()
+                .frame(maxWidth: .infinity)
             }
             .frame(height: 50)
-            .padding(.top)
-            .padding(.bottom)
 
             // number buttons
             HStack {
-                Spacer()
                 ForEach(1 ... _size, id: \.self) { number in
                     Button {} label: {
                         Text("\(number)")
                             .font(.largeTitle)
                             .foregroundColor(Color("AppButton"))
                     }
-                    Spacer()
+                    .frame(maxWidth: .infinity)
                 }
             }
+            .padding(.horizontal)
+            
+            // need a spacer to push everything to the top
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -125,14 +124,13 @@ struct TopBar: View {
                         .foregroundColor(Color("AppButton"))
                 }
             }
-            Spacer()
 
             // app title label
             Text(Constants.appTitle)
                 .font(.title)
                 .bold()
                 .foregroundColor(Color("AppTitle"))
-            Spacer()
+                .frame(maxWidth: .infinity)
 
             // settings button
             Button {} label: {
@@ -142,8 +140,7 @@ struct TopBar: View {
                 }
             }
         }
-        .padding(.leading)
-        .padding(.trailing)
+        .padding(.horizontal)
         .padding(.bottom)
     }
 }
@@ -172,6 +169,8 @@ struct GameGrid: View {
             // game status
             HStack {
                 Text(_difficulty.rawValue)
+                
+                // need a spacer to push the elements aside
                 Spacer()
 
                 // pause and play button
@@ -182,8 +181,7 @@ struct GameGrid: View {
                     }
                 }
             }
-            .padding(.leading)
-            .padding(.trailing)
+            .padding(.horizontal)
 
             // sudoku grid
             ZStack {
@@ -197,7 +195,6 @@ struct GameGrid: View {
                                     .foregroundColor(Color("AppNumber"))
                                     .frame(width: _cellSize, height: _cellSize)
                                     .border(.gray, width: 1)
-                                    .padding(.all, 0)
                             }
                         }
                     }
