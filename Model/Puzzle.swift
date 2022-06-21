@@ -6,88 +6,92 @@
 //
 
 import Foundation
-import SwiftUI
 
-//TODO: should combine with Grid.swift, should move code logic related to View to ViewModel
+// TODO: should combine with Grid.swift, should move code logic related to View to ViewModel
 
-final class Puzzle: ObservableObject {
-    @Published private var grid: [[Int]] = .init()
-    var counter = 0
-    
-    var sudokuAnswer: [[Int]] = []
-    var sudoku = [
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ]
+final class Puzzle {
+    private let _rowCount = 3
+    private let _columnCount = 3
+    private var _edgeCount: Int
+    private var _currentPuzzle: [[Int]] = []
+    private var _answerPuzzle: [[Int]] = []
+    private var _problemPuzzle: [[Int]] = []
+    private var _puzzleSolvesCount = 0
 
     init() {
-        if fillSudoku() {
-            sudokuAnswer = sudoku
-            hollowOutSudoku()
-            self.grid = sudoku
+        _edgeCount = _rowCount * _columnCount
+        _problemPuzzle = [[Int]](repeating: [Int](repeating: 0, count: _edgeCount), count: _edgeCount)
+        _generatePuzzle()
+    }
+
+    func render(rowIndex: Int, columnIndex: Int) -> Int {
+        return _currentPuzzle[rowIndex][columnIndex]
+    }
+    
+    // TODO: throw exception when fail to generate valid sudoku puzzle
+    private func _generatePuzzle() {
+        if _fillPuzzle() {
+            _answerPuzzle = _problemPuzzle
+            _hollowOutPuzzle()
+            _currentPuzzle = _problemPuzzle
         }
         else {
             fatalError("fail to generate valid sudoku puzzle")
         }
     }
 
-    func render(row: Int, col: Int) -> Text {
-        let value: Int = grid[row][col]
-
-        if value == 0 {
-            return Text("")
-        }
-
-        return Text("\(value)")
-            .font(.title)
-    }
-
-    func checkSudoku(sudoku: [[Int]]) -> Bool {
-        for row in 0...8 {
-            for column in 0...8 {
-                if sudoku[row][column] == 0 {
+    private func _isPuzzleCompleted(puzzle: [[Int]]) -> Bool {
+        for rowIndex in 0 ..< _edgeCount {
+            for columnIndex in 0 ..< _edgeCount {
+                if puzzle[rowIndex][columnIndex] == 0 {
                     return false
                 }
             }
         }
         return true
     }
+    
+    private func _isRowNotDuplicate(currentPuzzle: [[Int]], rowIndex: Int, value: Int) -> Bool {
+        return !currentPuzzle[rowIndex].contains(value)
+    }
+    
+    private func _isColumnNotDuplicate(currentPuzzle: [[Int]], columnIndex: Int, value: Int) -> Bool {
+        let column: [Int] = currentPuzzle.map { $0[columnIndex] }
+        return !column.contains(value)
+    }
+    
+    private func _isSquareNotDuplicate(currentPuzzle: [[Int]], rowIndex: Int, columnIndex: Int, value: Int) -> Bool {
+        var square: [Int] = []
+        let startRowIndex = rowIndex / _rowCount * _rowCount
+        let startColumnIndex = columnIndex / _columnCount * _columnCount
+        
+        for i in startRowIndex ... startRowIndex + _rowCount - 1 {
+            for j in startColumnIndex ... startColumnIndex + _columnCount - 1 {
+                square.append(currentPuzzle[i][j])
+            }
+        }
+        return !square.contains(value)
+    }
 
-    func solveSudoku(sudoku: [[Int]]) -> Bool {
-        var targetSudoku = sudoku
-        let numberList = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        var row = 0
-        var column = 0
-        for index in 0...80 {
-            row = index / 9
-            column = index % 9
-            if targetSudoku[row][column] == 0 {
+    private func _solvePuzzle(puzzle: [[Int]]) -> Bool {
+        let numberList = Array(1 ... _edgeCount)
+        var testPuzzle = puzzle
+        var rowIndex = 0
+        var columnIndex = 0
+        
+        for index in 0 ..< _edgeCount * _edgeCount {
+            rowIndex = index / _edgeCount
+            columnIndex = index % _edgeCount
+            if testPuzzle[rowIndex][columnIndex] == 0 {
                 for value in numberList {
-                    if !targetSudoku[row].contains(value) {
-                        if ![targetSudoku[0][column], targetSudoku[1][column], targetSudoku[2][column], targetSudoku[3][column], targetSudoku[4][column], targetSudoku[5][column], targetSudoku[6][column], targetSudoku[7][column], targetSudoku[8][column]].contains(value) {
-                            var square: [Int] = []
-                            for i in 0...2 {
-                                for j in 0...2 {
-                                    square.append(targetSudoku[row / 3 * 3 + i][column / 3 * 3 + j])
-                                }
-                            }
-                            if !square.contains(value) {
-                                targetSudoku[row][column] = value
-                                if checkSudoku(sudoku: targetSudoku) {
-                                    counter += 1
-                                    break
-                                } else {
-                                    if solveSudoku(sudoku: targetSudoku) {
-                                        return true
-                                    }
-                                }
+                    if _isRowNotDuplicate(currentPuzzle: testPuzzle, rowIndex: rowIndex, value: value) && _isColumnNotDuplicate(currentPuzzle: testPuzzle, columnIndex: columnIndex, value: value) && _isSquareNotDuplicate(currentPuzzle: testPuzzle, rowIndex: rowIndex, columnIndex: columnIndex, value: value) {
+                        testPuzzle[rowIndex][columnIndex] = value
+                        if _isPuzzleCompleted(puzzle: testPuzzle) {
+                            _puzzleSolvesCount += 1
+                            break
+                        } else {
+                            if _solvePuzzle(puzzle: testPuzzle) {
+                                return true
                             }
                         }
                     }
@@ -95,37 +99,28 @@ final class Puzzle: ObservableObject {
                 break
             }
         }
-        targetSudoku[row][column] = 0
+        
+        testPuzzle[rowIndex][columnIndex] = 0
         return false
     }
 
-    func fillSudoku() -> Bool {
-        var numberList = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        var row = 0
-        var column = 0
-        for index in 0...80 {
-            row = index / 9
-            column = index % 9
-            if sudoku[row][column] == 0 {
+    private func _fillPuzzle() -> Bool {
+        var numberList = Array(1 ... _edgeCount)
+        var rowIndex = 0
+        var columnIndex = 0
+        for index in 0 ..< _edgeCount * _edgeCount {
+            rowIndex = index / _edgeCount
+            columnIndex = index % _edgeCount
+            if _problemPuzzle[rowIndex][columnIndex] == 0 {
                 numberList.shuffle()
                 for value in numberList {
-                    if !sudoku[row].contains(value) {
-                        if ![sudoku[0][column], sudoku[1][column], sudoku[2][column], sudoku[3][column], sudoku[4][column], sudoku[5][column], sudoku[6][column], sudoku[7][column], sudoku[8][column]].contains(value) {
-                            var square: [Int] = []
-                            for i in 0...2 {
-                                for j in 0...2 {
-                                    square.append(sudoku[row / 3 * 3 + i][column / 3 * 3 + j])
-                                }
-                            }
-                            if !square.contains(value) {
-                                sudoku[row][column] = value
-                                if checkSudoku(sudoku: sudoku) {
-                                    return true
-                                } else {
-                                    if fillSudoku() {
-                                        return true
-                                    }
-                                }
+                    if _isRowNotDuplicate(currentPuzzle: _problemPuzzle, rowIndex: rowIndex, value: value) && _isColumnNotDuplicate(currentPuzzle: _problemPuzzle, columnIndex: columnIndex, value: value) && _isSquareNotDuplicate(currentPuzzle: _problemPuzzle, rowIndex: rowIndex, columnIndex: columnIndex, value: value) {
+                        _problemPuzzle[rowIndex][columnIndex] = value
+                        if _isPuzzleCompleted(puzzle: _problemPuzzle) {
+                            return true
+                        } else {
+                            if _fillPuzzle() {
+                                return true
                             }
                         }
                     }
@@ -133,29 +128,29 @@ final class Puzzle: ObservableObject {
                 break
             }
         }
-        sudoku[row][column] = 0
+        _problemPuzzle[rowIndex][columnIndex] = 0
         return false
     }
 
-    func hollowOutSudoku() {
+    private func _hollowOutPuzzle() {
         var attempts = 1 //difficulty
-        counter = 1
+        _puzzleSolvesCount = 1
         while attempts > 0 {
             var numberList: [Int] = []
-            for count in 0...80 {
+            for count in 0 ..< _edgeCount * _edgeCount {
                 numberList.append(count)
             }
             numberList.shuffle()
             for index in numberList {
-                let row = index / 9
-                let column = index % 9
-                let backup = sudoku[row][column]
-                sudoku[row][column] = 0
-                let copySudoku: [[Int]] = sudoku
+                let rowIndex = index / _edgeCount
+                let columnIndex = index % _edgeCount
+                let backup = _problemPuzzle[rowIndex][columnIndex]
+                _problemPuzzle[rowIndex][columnIndex] = 0
+                let copyPuzzle: [[Int]] = _problemPuzzle
                 
-                counter = 0
-                if solveSudoku(sudoku: copySudoku) && counter != 1 {
-                    sudoku[row][column] = backup
+                _puzzleSolvesCount = 0
+                if _solvePuzzle(puzzle: copyPuzzle) && _puzzleSolvesCount != 1 {
+                    _problemPuzzle[rowIndex][columnIndex] = backup
                     attempts -= 1
                     break;
                 }
