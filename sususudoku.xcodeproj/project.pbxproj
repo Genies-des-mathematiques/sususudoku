@@ -76,6 +76,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A2A288C32863404A008D9457 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				A2A288C12862FF56008D9457 /* GameStatus.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		E133B8222859E42B0098D53A /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -102,18 +110,18 @@
 			path = Styles;
 			sourceTree = "<group>";
 		};
-		E133B8272859E50D0098D53A /* extensions */ = {
+		E133B8272859E50D0098D53A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				E133B8282859E5210098D53A /* Size.swift */,
 			);
-			path = extensions;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		E13ED9AE285246A100220337 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				E133B8272859E50D0098D53A /* extensions */,
+				E133B8272859E50D0098D53A /* Extensions */,
 				E133B8242859E4460098D53A /* Styles */,
 				E133B8232859E4390098D53A /* Pages */,
 				E133B8222859E42B0098D53A /* Components */,
@@ -125,6 +133,7 @@
 		E13ED9AF285246A800220337 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				A2A288C32863404A008D9457 /* Data */,
 				A2A288BF2862FADE008D9457 /* GameBoardViewModel.swift */,
 			);
 			path = ViewModel;
@@ -135,7 +144,6 @@
 			children = (
 				2C00303D285C8B18002BB9F5 /* Puzzle.swift */,
 				A2A288BD2862F989008D9457 /* Difficulty.swift */,
-				A2A288C12862FF56008D9457 /* GameStatus.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";

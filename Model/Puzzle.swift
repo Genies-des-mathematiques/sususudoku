@@ -94,7 +94,7 @@ final class Puzzle {
                             columnIndex: columnIndex,
                             value: value
                         ),
-                       _isBlockNotDuplicate(
+                        _isBlockNotDuplicate(
                             currentPuzzle: testPuzzle,
                             rowIndex: rowIndex,
                             columnIndex: columnIndex,

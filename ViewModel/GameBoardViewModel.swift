@@ -12,7 +12,6 @@ class GameBoardViewModel {
 
     private let _difficulty: Difficulty
     var difficulty: Difficulty { return _difficulty }
-
     private var _gameStatus: GameStatus
     var gameStatus: GameStatus { return _gameStatus }
 
