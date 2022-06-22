@@ -8,9 +8,10 @@
 import Foundation
 
 final class Puzzle {
-    private var _currentPuzzle: [[Int]] = []
     private var _answerPuzzle: [[Int]] = []
+    var answerPuzzle: [[Int]] { return _answerPuzzle }
     private var _problemPuzzle: [[Int]] = []
+    var problemPuzzle: [[Int]] { return _problemPuzzle }
     private var _puzzleSolvesCount = 0
 
     private var _rowCount = 3
@@ -26,17 +27,12 @@ final class Puzzle {
         _generatePuzzle()
     }
 
-    func getNumber(rowIndex: Int, columnIndex: Int) -> Int {
-        return _currentPuzzle[rowIndex][columnIndex]
-    }
-
     private func _generatePuzzle() {
         if _fillPuzzle() {
             _answerPuzzle = _problemPuzzle
             _hollowOutPuzzle()
-            _currentPuzzle = _problemPuzzle
         } else {
-            print("Puzzle: generate problem failed")
+            print("Puzzle: generate problem failed") // TODO: should throw exception or use debug load
         }
     }
 

@@ -9,6 +9,7 @@ import Foundation
 
 class GameBoardViewModel {
     private let _puzzle: Puzzle
+    private var _currentPuzzle: [[Int]] = []
 
     private let _difficulty: Difficulty
     var difficulty: Difficulty { return _difficulty }
@@ -21,12 +22,13 @@ class GameBoardViewModel {
 
     init(_ rowCount: Int, _ columnCount: Int, _ difficulty: Difficulty, _ gameStatus: GameStatus) {
         _puzzle = Puzzle(rowCount, columnCount)
+        _currentPuzzle = _puzzle.problemPuzzle
         _difficulty = difficulty
         _gameStatus = gameStatus
     }
 
     func getCellText(rowIndex: Int, columnIndex: Int) -> String {
-        let value = _puzzle.getNumber(rowIndex: rowIndex, columnIndex: columnIndex)
+        let value = _currentPuzzle[rowIndex][columnIndex]
         return value == 0 ? "" : "\(value)"
     }
 }
