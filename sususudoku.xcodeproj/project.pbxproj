@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0F2829862860AD5F0027C00C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2829852860AD5F0027C00C /* Constants.swift */; };
-		0F9431CA285DDEA600A3F288 /* GameBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9431C9285DDEA600A3F288 /* GameBoard.swift */; };
+		0F9431CA285DDEA600A3F288 /* GameBoardPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9431C9285DDEA600A3F288 /* GameBoardPage.swift */; };
 		2C00303E285C8B18002BB9F5 /* Puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C00303D285C8B18002BB9F5 /* Puzzle.swift */; };
 		A2A288BE2862F989008D9457 /* Difficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A288BD2862F989008D9457 /* Difficulty.swift */; };
 		A2A288C02862FADE008D9457 /* GameBoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A288BF2862FADE008D9457 /* GameBoardViewModel.swift */; };
@@ -37,7 +37,7 @@
 
 /* Begin PBXFileReference section */
 		0F2829852860AD5F0027C00C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		0F9431C9285DDEA600A3F288 /* GameBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameBoard.swift; sourceTree = "<group>"; };
+		0F9431C9285DDEA600A3F288 /* GameBoardPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameBoardPage.swift; sourceTree = "<group>"; };
 		2C00303D285C8B18002BB9F5 /* Puzzle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Puzzle.swift; sourceTree = "<group>"; };
 		A2A288BD2862F989008D9457 /* Difficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Difficulty.swift; sourceTree = "<group>"; };
 		A2A288BF2862FADE008D9457 /* GameBoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardViewModel.swift; sourceTree = "<group>"; };
@@ -87,7 +87,7 @@
 		E133B8232859E4390098D53A /* Pages */ = {
 			isa = PBXGroup;
 			children = (
-				0F9431C9285DDEA600A3F288 /* GameBoard.swift */,
+				0F9431C9285DDEA600A3F288 /* GameBoardPage.swift */,
 				E133B81D2859D1620098D53A /* HomePage.swift */,
 				E14175E5285BA7630038E86D /* SettingSheet.swift */,
 			);
@@ -312,7 +312,7 @@
 				A2A288BE2862F989008D9457 /* Difficulty.swift in Sources */,
 				E133B8292859E5210098D53A /* Size.swift in Sources */,
 				A2A288C02862FADE008D9457 /* GameBoardViewModel.swift in Sources */,
-				0F9431CA285DDEA600A3F288 /* GameBoard.swift in Sources */,
+				0F9431CA285DDEA600A3F288 /* GameBoardPage.swift in Sources */,
 				2C00303E285C8B18002BB9F5 /* Puzzle.swift in Sources */,
 				E16AC81E284C191F0009F304 /* sususudokuApp.swift in Sources */,
 				E14175E6285BA7630038E86D /* SettingSheet.swift in Sources */,
