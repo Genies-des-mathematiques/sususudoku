@@ -7,8 +7,6 @@
 
 import Foundation
 
-// TODO: should move code logic related to View to ViewModel
-
 final class Puzzle {
     private var _currentPuzzle: [[Int]] = []
     private var _answerPuzzle: [[Int]] = []
@@ -22,31 +20,20 @@ final class Puzzle {
     var edgeCount: Int { return _rowCount * _columnCount }
 
     init(_ rowCount: Int, _ columnCount: Int) {
-        print("Puzzle: start init")
         _rowCount = rowCount
         _columnCount = columnCount
         _problemPuzzle = [[Int]](repeating: [Int](repeating: 0, count: edgeCount), count: edgeCount)
         _generatePuzzle()
-
-        print("Puzzle: initialized")
-        print("----- problem puzzle -----")
-        print(_problemPuzzle)
-        print("----- answer puzzle -----")
-        print(_answerPuzzle)
     }
 
     func getNumber(rowIndex: Int, columnIndex: Int) -> Int {
         return _currentPuzzle[rowIndex][columnIndex]
     }
 
-    // TODO: throw exception when fail to generate valid sudoku puzzle
     private func _generatePuzzle() {
-        print("Puzzle: randomly filling numbers ... ")
         if _fillPuzzle() {
             _answerPuzzle = _problemPuzzle
-            print("Puzzle: starting to remove out numbers ... ")
             _hollowOutPuzzle()
-            print("Puzzle: generate problem success")
             _currentPuzzle = _problemPuzzle
         } else {
             print("Puzzle: generate problem failed")
@@ -182,8 +169,6 @@ final class Puzzle {
         let mid = edgeCount * edgeCount / 2
         let diff = edgeCount * edgeCount / 20
         let hollowLimit = Int.random(in: mid - diff ... mid + diff) // the number of blocks that should hollow out
-        print("Puzzle -> _hollowOutPuzzle(): hollowLimit = \(hollowLimit)")
-
         var hollowCount = 0
         var attempts = 1 // difficulty
         _puzzleSolvesCount = 1
@@ -203,17 +188,13 @@ final class Puzzle {
                 if _solvePuzzle(puzzle: copyPuzzle) && _puzzleSolvesCount != 1 {
                     _problemPuzzle[rowIndex][columnIndex] = backup
                     attempts -= 1
-                    print("Puzzle -> _hollowOutPuzzle(): does not hav exactly one solution, hollow out stopped")
                     break
                 }
 
-                if hollowCount >= hollowLimit {
-                    print("Puzzle -> _hollowOutPuzzle(): reached hollowLimit \(hollowLimit), hollow out stopped")
-                    break
-                }
-
-                print("Puzzle -> _hollowOutPuzzle(): removed number in \(rowIndex), \(columnIndex) success")
                 hollowCount += 1
+                if hollowCount >= hollowLimit {
+                    break
+                }
             }
             attempts -= 1
         }
