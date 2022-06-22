@@ -17,10 +17,8 @@ final class Puzzle {
 
     private var _rowCount = 3
     var rowCount: Int { return _rowCount }
-
     private var _columnCount = 3
     var columnCount: Int { return _columnCount }
-
     var edgeCount: Int { return _rowCount * _columnCount }
 
     init(_ rowCount: Int, _ columnCount: Int) {
@@ -37,7 +35,7 @@ final class Puzzle {
         print(_answerPuzzle)
     }
 
-    func render(rowIndex: Int, columnIndex: Int) -> Int {
+    func getNumber(rowIndex: Int, columnIndex: Int) -> Int {
         return _currentPuzzle[rowIndex][columnIndex]
     }
 
@@ -75,17 +73,17 @@ final class Puzzle {
         return !column.contains(value)
     }
 
-    private func _isSquareNotDuplicate(currentPuzzle: [[Int]], rowIndex: Int, columnIndex: Int, value: Int) -> Bool {
-        var square: [Int] = []
+    private func _isBlockNotDuplicate(currentPuzzle: [[Int]], rowIndex: Int, columnIndex: Int, value: Int) -> Bool {
+        var block: [Int] = []
         let startRowIndex = rowIndex / _rowCount * _rowCount
         let startColumnIndex = columnIndex / _columnCount * _columnCount
 
         for i in startRowIndex ... startRowIndex + _rowCount - 1 {
             for j in startColumnIndex ... startColumnIndex + _columnCount - 1 {
-                square.append(currentPuzzle[i][j])
+                block.append(currentPuzzle[i][j])
             }
         }
-        return !square.contains(value)
+        return !block.contains(value)
     }
 
     private func _solvePuzzle(puzzle: [[Int]]) -> Bool {
@@ -109,7 +107,7 @@ final class Puzzle {
                             columnIndex: columnIndex,
                             value: value
                         ),
-                        _isSquareNotDuplicate(
+                       _isBlockNotDuplicate(
                             currentPuzzle: testPuzzle,
                             rowIndex: rowIndex,
                             columnIndex: columnIndex,
@@ -155,7 +153,7 @@ final class Puzzle {
                             columnIndex: columnIndex,
                             value: value
                         ) &&
-                        _isSquareNotDuplicate(
+                        _isBlockNotDuplicate(
                             currentPuzzle: _problemPuzzle,
                             rowIndex: rowIndex,
                             columnIndex: columnIndex,
@@ -185,11 +183,11 @@ final class Puzzle {
         let diff = edgeCount * edgeCount / 20
         let hollowLimit = Int.random(in: mid - diff ... mid + diff) // the number of blocks that should hollow out
         print("Puzzle -> _hollowOutPuzzle(): hollowLimit = \(hollowLimit)")
-        
+
         var hollowCount = 0
         var attempts = 1 // difficulty
         _puzzleSolvesCount = 1
-        
+
         while attempts > 0 {
             var numberList = Array(0 ..< edgeCount * edgeCount)
             numberList.shuffle()
@@ -208,12 +206,12 @@ final class Puzzle {
                     print("Puzzle -> _hollowOutPuzzle(): does not hav exactly one solution, hollow out stopped")
                     break
                 }
-                
+
                 if hollowCount >= hollowLimit {
                     print("Puzzle -> _hollowOutPuzzle(): reached hollowLimit \(hollowLimit), hollow out stopped")
                     break
                 }
-                
+
                 print("Puzzle -> _hollowOutPuzzle(): removed number in \(rowIndex), \(columnIndex) success")
                 hollowCount += 1
             }
