@@ -23,7 +23,12 @@ final class Puzzle {
     init(_ rowCount: Int, _ columnCount: Int) {
         _rowCount = rowCount
         _columnCount = columnCount
+        resetGame()
+    }
+
+    func resetGame() {
         _problemPuzzle = [[Int]](repeating: [Int](repeating: 0, count: edgeCount), count: edgeCount)
+        _answerPuzzle = []
         _generatePuzzle()
     }
 
