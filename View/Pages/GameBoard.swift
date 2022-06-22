@@ -16,7 +16,8 @@ struct GameBoardPage: View {
     private let _difficulty: Difficulty
     private let _gameStart = GameStatus(status: "Play", displayIconName: "pause")
     private let _gamePause = GameStatus(status: "Pause", displayIconName: "play.fill")
-
+    
+    private var _puzzle: Puzzle
     private var _gameStatus: GameStatus
     private var _hintLeft = 3
 
@@ -26,11 +27,12 @@ struct GameBoardPage: View {
         _size = _columnCount * _rowCount
         _difficulty = difficulty
         _gameStatus = _gameStart
+        _puzzle = Puzzle(_rowCount, _columnCount)
     }
 
     var body: some View {
         VStack {
-            GameGrid(_difficulty, _columnCount, _rowCount, _gameStatus, Grid())
+            GameGrid(_difficulty, _gameStatus, _puzzle)
 
             // game buttons
             HStack {
@@ -142,21 +144,15 @@ struct GameBoardPage: View {
 
 struct GameGrid: View {
     private let _difficulty: Difficulty
-    private let _columnCount: Int
-    private let _rowCount: Int
     private var _gameStatus: GameStatus
-    private let _grid: Grid
-    private let _size: Int
+    private let _puzzle: Puzzle
     private let _cellSize: Double
 
-    init(_ difficulty: Difficulty, _ columnCount: Int, _ rowCount: Int, _ gameStatus: GameStatus, _ grid: Grid) {
+    init(_ difficulty: Difficulty, _ gameStatus: GameStatus, _ puzzle: Puzzle) {
         _difficulty = difficulty
-        _columnCount = columnCount
-        _rowCount = rowCount
         _gameStatus = gameStatus
-        _grid = grid
-        _size = _columnCount * _rowCount
-        _cellSize = Double(UIScreen.screenWidth) / Double(_size)
+        _puzzle = puzzle
+        _cellSize = Double(UIScreen.screenWidth) / Double(_puzzle.edgeCount)
     }
 
     var body: some View {
@@ -182,10 +178,10 @@ struct GameGrid: View {
             ZStack {
                 // fill grid value
                 VStack(spacing: -1) {
-                    ForEach(0 ..< _size, id: \.self) { row in
+                    ForEach(0 ..< _puzzle.edgeCount, id: \.self) { row in
                         HStack(spacing: -1) {
-                            ForEach(0 ..< _size, id: \.self) { col in
-                                let value = _grid.render(rowIndex: row, columnIndex: col)
+                            ForEach(0 ..< _puzzle.edgeCount, id: \.self) { col in
+                                let value = _puzzle.render(rowIndex: row, columnIndex: col)
                                 if value == 0 {
                                     Text("")
                                         .font(.title)
@@ -207,14 +203,14 @@ struct GameGrid: View {
 
                 // draw grid outline
                 VStack(spacing: -1) {
-                    ForEach(0 ..< _columnCount, id: \.self) { _ in
+                    ForEach(0 ..< _puzzle.columnCount, id: \.self) { _ in
                         HStack(spacing: -1) {
-                            ForEach(0 ..< _rowCount, id: \.self) { _ in
+                            ForEach(0 ..< _puzzle.rowCount, id: \.self) { _ in
                                 Rectangle()
                                     .foregroundColor(Color("AppBackground").opacity(0))
                                     .frame(
-                                        width: _cellSize * Double(_columnCount) - 1,
-                                        height: _cellSize * Double(_rowCount) - 1)
+                                        width: _cellSize * Double(_puzzle.columnCount) - 1,
+                                        height: _cellSize * Double(_puzzle.rowCount) - 1)
                                     .border(.black, width: 1.5)
                             }
                         }
