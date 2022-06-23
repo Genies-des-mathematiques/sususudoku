@@ -10,9 +10,10 @@ import SwiftUI
 struct GameBoardPage: View {
     @State private var _isShowingSettingSheet = false
 
-    private let _columnCount: Int
     private let _rowCount: Int
-    private let _size: Int
+    private let _columnCount: Int
+    var edgeCount: Int { return _rowCount * _columnCount }
+
     private let _difficulty: Difficulty
     private let _gameStart = GameStatus(status: "Play", displayIconName: "pause")
     private let _gamePause = GameStatus(status: "Pause", displayIconName: "play.fill")
@@ -23,14 +24,13 @@ struct GameBoardPage: View {
     init(_ columnCount: Int, _ rowCount: Int, _ difficulty: Difficulty) {
         _columnCount = columnCount
         _rowCount = rowCount
-        _size = _columnCount * _rowCount
         _difficulty = difficulty
         _gameStatus = _gameStart
     }
 
     var body: some View {
         VStack {
-            GameGrid(_difficulty, _columnCount, _rowCount, _gameStatus, Grid())
+            GameGrid(_rowCount, _columnCount, _difficulty, _gameStatus)
 
             // game buttons
             HStack {
@@ -95,7 +95,7 @@ struct GameBoardPage: View {
 
             // number buttons
             HStack {
-                ForEach(1 ... _size, id: \.self) { number in
+                ForEach(1 ... edgeCount, id: \.self) { number in
                     Button {} label: {
                         Text("\(number)")
                             .font(.largeTitle)
@@ -141,29 +141,19 @@ struct GameBoardPage: View {
 }
 
 struct GameGrid: View {
-    private let _difficulty: Difficulty
-    private let _columnCount: Int
-    private let _rowCount: Int
-    private var _gameStatus: GameStatus
-    private let _grid: Grid
-    private let _size: Int
     private let _cellSize: Double
+    private let _viewModel: GameBoardViewModel
 
-    init(_ difficulty: Difficulty, _ columnCount: Int, _ rowCount: Int, _ gameStatus: GameStatus, _ grid: Grid) {
-        _difficulty = difficulty
-        _columnCount = columnCount
-        _rowCount = rowCount
-        _gameStatus = gameStatus
-        _grid = grid
-        _size = _columnCount * _rowCount
-        _cellSize = Double(UIScreen.screenWidth) / Double(_size)
+    init(_ rowCount: Int, _ columnCount: Int, _ difficulty: Difficulty, _ gameStatus: GameStatus) {
+        _viewModel = GameBoardViewModel(rowCount, columnCount, difficulty, gameStatus)
+        _cellSize = Double(UIScreen.screenWidth) / Double(_viewModel.boardEdgeCount)
     }
 
     var body: some View {
         VStack {
             // game status
             HStack {
-                Text(_difficulty.rawValue)
+                Text(_viewModel.difficulty.rawValue)
 
                 // need a spacer to push the elements aside
                 Spacer()
@@ -171,7 +161,7 @@ struct GameGrid: View {
                 // pause and play button
                 Button {} label: {
                     VStack {
-                        Image(systemName: _gameStatus.displayIcon())
+                        Image(systemName: _viewModel.gameStatus.displayIconName)
                             .foregroundColor(Color("GameButton"))
                     }
                 }
@@ -182,24 +172,14 @@ struct GameGrid: View {
             ZStack {
                 // fill grid value
                 VStack(spacing: -1) {
-                    ForEach(0 ..< _size, id: \.self) { row in
+                    ForEach(0 ..< _viewModel.boardEdgeCount, id: \.self) { rowIndex in
                         HStack(spacing: -1) {
-                            ForEach(0 ..< _size, id: \.self) { col in
-                                let value = _grid.render(rowIndex: row, columnIndex: col)
-                                if value == 0 {
-                                    Text("")
-                                        .font(.title)
-                                        .foregroundColor(Color("AppNumber"))
-                                        .frame(width: _cellSize, height: _cellSize)
-                                        .border(Color("GameGridLine"), width: 1)
-                                }
-                                else {
-                                    Text("\(value)")
-                                        .font(.title)
-                                        .foregroundColor(Color("AppNumber"))
-                                        .frame(width: _cellSize, height: _cellSize)
-                                        .border(Color("GameGridLine"), width: 1)
-                                }
+                            ForEach(0 ..< _viewModel.boardEdgeCount, id: \.self) { columnIndex in
+                                Text(_viewModel.getCellText(rowIndex: rowIndex, columnIndex: columnIndex))
+                                    .font(.title)
+                                    .foregroundColor(Color("AppNumber"))
+                                    .frame(width: _cellSize, height: _cellSize)
+                                    .border(Color("GameGridLine"), width: 1)
                             }
                         }
                     }
@@ -207,14 +187,14 @@ struct GameGrid: View {
 
                 // draw grid outline
                 VStack(spacing: -1) {
-                    ForEach(0 ..< _columnCount, id: \.self) { _ in
+                    ForEach(0 ..< _viewModel.blockColumnCount, id: \.self) { _ in
                         HStack(spacing: -1) {
-                            ForEach(0 ..< _rowCount, id: \.self) { _ in
+                            ForEach(0 ..< _viewModel.blockRowCount, id: \.self) { _ in
                                 Rectangle()
                                     .foregroundColor(Color("AppBackground").opacity(0))
                                     .frame(
-                                        width: _cellSize * Double(_columnCount) - 1,
-                                        height: _cellSize * Double(_rowCount) - 1)
+                                        width: _cellSize * Double(_viewModel.blockColumnCount) - 1,
+                                        height: _cellSize * Double(_viewModel.blockRowCount) - 1)
                                     .border(.black, width: 1.5)
                             }
                         }
@@ -223,20 +203,6 @@ struct GameGrid: View {
             }
         }
         .padding()
-    }
-}
-
-struct GameStatus {
-    private let _status: String
-    private let _displayIconName: String
-
-    init(status: String, displayIconName: String) {
-        _status = status
-        _displayIconName = displayIconName
-    }
-
-    func displayIcon() -> String {
-        return _displayIconName
     }
 }
 
