@@ -201,6 +201,8 @@ struct GameGrid: View {
                                         Text(_text)
                                         .foregroundColor(Color("NoteNumber"))
                                         .frame(width: _cellSize, height: _cellSize)
+                                        .scaledToFill()
+                                        .minimumScaleFactor(0.5)
                                         .background(_cellColor)
                                         .border(Color("GameGridLine"), width: 1)
                                         :
@@ -208,6 +210,8 @@ struct GameGrid: View {
                                         .font(.title)
                                         .foregroundColor(_textColor)
                                         .frame(width: _cellSize, height: _cellSize)
+                                        .scaledToFill()
+                                        .minimumScaleFactor(1)
                                         .background(_cellColor)
                                         .border(Color("GameGridLine"), width: 1)
                                 }
@@ -245,3 +249,28 @@ struct GameBoardView_Previews: PreviewProvider {
     }
 }
 #endif
+
+
+//struct NoteModifier: ViewModifier {
+//    let isNote: Bool
+//
+//    func body(content: Content) -> some View {
+//        Group {
+//            if isNote {
+//                Text(_text)
+//                .foregroundColor(Color("NoteNumber"))
+//                .frame(width: _cellSize, height: _cellSize)
+//                .background(_cellColor)
+//                .border(Color("GameGridLine"), width: 1)
+//            } else {
+//                content
+//            }
+//        }
+//    }
+//}
+//
+//extension View {
+//    func isNote(_ bool: Bool) -> some View {
+//        modifier(NoteModifier(isNote: <#T##Bool#>))
+//    }
+//}
