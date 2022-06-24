@@ -191,22 +191,14 @@ struct GameGrid: View {
                             ForEach(0 ..< _viewModel.boardEdgeCount, id: \.self) { columnIndex in
                                 Button {
                                     _viewModel.selectCell(rowIndex: rowIndex, columnIndex: columnIndex)
-                                    // should change highlight or whatever for selected cell
                                 } label: {
                                     let _cellColor = _viewModel.isSelectedCell(rowIndex: rowIndex, columnIndex: columnIndex) ? Color("SelectedCell") : Color("CellBackground")
                                     let _textColor = _viewModel.isPuzzle(rowIndex: rowIndex, columnIndex: columnIndex) ? Color("AppButton") : Color("AppNumber")
-                                    let _haveNote = _viewModel.getNotes(rowIndex: rowIndex, columnIndex: columnIndex) != nil
-                                    let _text = _haveNote ? _viewModel.getNotes(rowIndex: rowIndex, columnIndex: columnIndex)! : _viewModel.getCellText(rowIndex: rowIndex, columnIndex: columnIndex)
-                                    _haveNote ?
-                                        Text(_text)
-                                        .foregroundColor(Color("NoteNumber"))
-                                        .frame(width: _cellSize, height: _cellSize)
-                                        .background(_cellColor)
-                                        .border(Color("GameGridLine"), width: 1)
-                                        :
-                                        Text(_text)
-                                        .font(.title)
-                                        .foregroundColor(_textColor)
+                                    let _isShowingNotes = _viewModel.isShowingNotes(rowIndex: rowIndex, columnIndex: columnIndex)
+                                    let _text = _viewModel.getCellText(rowIndex: rowIndex, columnIndex: columnIndex)
+                                    Text(_text)
+                                        .font(_isShowingNotes ? Font.body : Font.title)
+                                        .foregroundColor(_isShowingNotes ? Color("NoteNumber") : _textColor)
                                         .frame(width: _cellSize, height: _cellSize)
                                         .background(_cellColor)
                                         .border(Color("GameGridLine"), width: 1)

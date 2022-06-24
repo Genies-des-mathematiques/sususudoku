@@ -41,11 +41,17 @@ class GameBoardViewModel: ObservableObject {
         _currentPuzzle = _puzzle.problemPuzzle
         _difficulty = difficulty
         _gameStatus = gameStatus
+        _puzzleNotes = [[[Int]]](repeating: [[Int]](repeating: [], count: 100), count: 100)
     }
 
     func getCellText(rowIndex: Int, columnIndex: Int) -> String {
-        let value = _currentPuzzle[rowIndex][columnIndex]
-        return value == 0 ? "" : "\(value)"
+        if isShowingNotes(rowIndex: rowIndex, columnIndex: columnIndex) {
+            let notes = _puzzleNotes[rowIndex][columnIndex].map { "\($0)" }
+            return notes.joined(separator: " ")
+        } else {
+            let value = _currentPuzzle[rowIndex][columnIndex]
+            return value == 0 ? "" : "\(value)"
+        }
     }
     
     func isSelectedCell(rowIndex: Int, columnIndex: Int) -> Bool {
@@ -54,6 +60,15 @@ class GameBoardViewModel: ObservableObject {
     
     func isPuzzle(rowIndex: Int, columnIndex: Int) -> Bool {
         return _puzzle.canModifyCell(rowIndex: rowIndex, columnIndex: columnIndex)
+    }
+    
+    func isShowingNotes(rowIndex: Int, columnIndex: Int) -> Bool {
+        if !(rowIndex >= 0 && rowIndex < boardEdgeCount && columnIndex >= 0 && columnIndex < boardEdgeCount) {
+            return false
+        }
+        
+        let cellValue = _currentPuzzle[rowIndex][columnIndex]
+        return cellValue == 0 && !_puzzleNotes[rowIndex][columnIndex].isEmpty
     }
     
     func validateBoard() -> Bool {
@@ -82,14 +97,14 @@ class GameBoardViewModel: ObservableObject {
             // print("Exception: cell cannot take notes because it is part of the given puzzle")
             return
         }
-        if isNoteMode {
-            _updateCellNotes(value: value)
-            return
-        }
         
-        _currentPuzzle[_currentRowIndex][_currentColumnIndex] = value
-        // clear notes after filled an answer to the cell
-//        _puzzleNotes[_currentRowIndex][_currentColumnIndex].removeAll()
+        if isNoteMode {
+            _currentPuzzle[_currentRowIndex][_currentColumnIndex] = 0
+            _updateCellNotes(value: value)
+        } else {
+            _puzzleNotes[_currentRowIndex][_currentColumnIndex].removeAll()
+            _currentPuzzle[_currentRowIndex][_currentColumnIndex] = value
+        }
     }
     
     func clearCellNumber() {
@@ -103,53 +118,11 @@ class GameBoardViewModel: ObservableObject {
         }
         
         _currentPuzzle[_currentRowIndex][_currentColumnIndex] = 0
-        // clear notes
-//        _puzzleNotes[_currentRowIndex][_currentColumnIndex].removeAll()
+        _puzzleNotes[_currentRowIndex][_currentColumnIndex].removeAll()
     }
     
     func changeNoteMode() {
         isNoteMode = !isNoteMode
-    }
-    
-    // return notes of a cell, if it is empty, should return nil
-    func getNotes(rowIndex: Int, columnIndex: Int) -> String? {
-        if _puzzle.canModifyCell(rowIndex: rowIndex, columnIndex: columnIndex) {
-//            if !_puzzleNotes[rowIndex][columnIndex].isEmpty {
-//                /*
-//                 return puzzle notes here, can try use the code below to convert [Int] to String?
-//                    let notes = _puzzleNotes[rowIndex][columnIndex].map  { Optional(String($0)) }  // [Int] -> [String?]
-//                    let noteString = notes.joined(separator: " ")        // [String?] -> String?
-//                 */
-//            }
-            if rowIndex < 4 {
-                return "1 3 5 8 9"
-            }
-        }
-        return nil
-    }
-    
-    private func _updateCellNotes(value: Int) {
-        if !_isCurrentPositionValid() {
-            // print("Exception: board row and column position should be in range of 0 ..< boardEdgeCount")
-            return
-        }
-        if _isCellValueValid(value: value) {
-            // print("Exception: value shoule be in range of 1 ... boardEdgeCount")
-            return
-        }
-        if !_puzzle.canModifyCell(rowIndex: _currentRowIndex, columnIndex: _currentColumnIndex) {
-            // print("Exception: cell cannot take notes because it is part of the given puzzle")
-            return
-        }
-        
-        // remove if number exists in note list, else add number to note list
-        if _puzzleNotes[_currentRowIndex][_currentColumnIndex].contains(value) {
-            if let index = _puzzleNotes[_currentRowIndex][_currentColumnIndex].firstIndex(of: value) {
-                _puzzleNotes[_currentRowIndex][_currentColumnIndex].remove(at: index)
-            }
-        } else {
-            _puzzleNotes[_currentRowIndex][_currentColumnIndex].append(value)
-        }
     }
     
     // automatically fill hint answer to random blank position
@@ -173,6 +146,18 @@ class GameBoardViewModel: ObservableObject {
         
         _currentPuzzle[hintRowIndex][hintColumnIndex] = _puzzle.getCellAnswer(rowIndex: hintRowIndex, columnIndex: hintColumnIndex)
         _hints -= 1
+    }
+    
+    private func _updateCellNotes(value: Int) {
+        // remove if number exists in note list, else add number to note list
+        if _puzzleNotes[_currentRowIndex][_currentColumnIndex].contains(value) {
+            if let index = _puzzleNotes[_currentRowIndex][_currentColumnIndex].firstIndex(of: value) {
+                _puzzleNotes[_currentRowIndex][_currentColumnIndex].remove(at: index)
+            }
+        } else {
+            _puzzleNotes[_currentRowIndex][_currentColumnIndex].append(value)
+            _puzzleNotes[_currentRowIndex][_currentColumnIndex] = _puzzleNotes[_currentRowIndex][_currentColumnIndex].sorted()
+        }
     }
     
     private func _isCellValueValid(value: Int) -> Bool {
