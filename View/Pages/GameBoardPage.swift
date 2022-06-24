@@ -102,6 +102,21 @@ struct GameBoardPage: View {
             }
             .padding(.horizontal)
 
+            // send and validate board button
+            Button {
+                if _viewModel.validateBoard() {
+                    // win
+                } else {
+                    // try again
+                }
+            } label: {
+                Text("送出")
+                    .foregroundColor(.white)
+            }
+            .disabled(!_viewModel.isBoardCompleted)
+            .buttonStyle(ActivityButtonStyle())
+            .frame(minWidth: 0, maxWidth: .infinity)
+
             // need a spacer to push everything to the top
             Spacer()
         }
