@@ -41,14 +41,17 @@ struct GameBoardPage: View {
                 .frame(maxWidth: .infinity)
 
                 // note button
-                Button {} label: {
+                Button {
+                    _viewModel.changeNoteMode()
+                } label: {
                     VStack {
+                        let _color = _viewModel.isNoteMode ? Color("AppButton") : Color("GameButton")
                         Image(systemName: "pencil.tip")
                             .resizable()
                             .scaledToFit()
-                            .foregroundColor(Color("GameButton"))
+                            .foregroundColor(_color)
                         Text("筆記")
-                            .foregroundColor(Color("GameButton"))
+                            .foregroundColor(_color)
                             .font(.footnote)
                     }
                 }
@@ -192,7 +195,16 @@ struct GameGrid: View {
                                 } label: {
                                     let _cellColor = _viewModel.isSelectedCell(rowIndex: rowIndex, columnIndex: columnIndex) ? Color("SelectedCell") : Color("CellBackground")
                                     let _textColor = _viewModel.isPuzzle(rowIndex: rowIndex, columnIndex: columnIndex) ? Color("AppButton") : Color("AppNumber")
-                                    Text(_viewModel.getCellText(rowIndex: rowIndex, columnIndex: columnIndex))
+                                    let _haveNote = _viewModel.getNotes(rowIndex: rowIndex, columnIndex: columnIndex) != nil
+                                    let _text = _haveNote ? _viewModel.getNotes(rowIndex: rowIndex, columnIndex: columnIndex)! : _viewModel.getCellText(rowIndex: rowIndex, columnIndex: columnIndex)
+                                    _haveNote ?
+                                        Text(_text)
+                                        .foregroundColor(Color("NoteNumber"))
+                                        .frame(width: _cellSize, height: _cellSize)
+                                        .background(_cellColor)
+                                        .border(Color("GameGridLine"), width: 1)
+                                        :
+                                        Text(_text)
                                         .font(.title)
                                         .foregroundColor(_textColor)
                                         .frame(width: _cellSize, height: _cellSize)

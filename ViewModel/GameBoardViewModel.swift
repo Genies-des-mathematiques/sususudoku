@@ -25,7 +25,7 @@ class GameBoardViewModel: ObservableObject {
     
     @Published private var _currentRowIndex = -1
     @Published private var _currentColumnIndex = -1
-    var isNoteMode = false
+    @Published var isNoteMode = false
     
     var isBoardCompleted: Bool {
         for row in _currentPuzzle {
@@ -82,8 +82,14 @@ class GameBoardViewModel: ObservableObject {
             // print("Exception: cell cannot take notes because it is part of the given puzzle")
             return
         }
+        if isNoteMode {
+            _updateCellNotes(value: value)
+            return
+        }
         
         _currentPuzzle[_currentRowIndex][_currentColumnIndex] = value
+        // clear notes after filled an answer to the cell
+//        _puzzleNotes[_currentRowIndex][_currentColumnIndex].removeAll()
     }
     
     func clearCellNumber() {
@@ -97,9 +103,32 @@ class GameBoardViewModel: ObservableObject {
         }
         
         _currentPuzzle[_currentRowIndex][_currentColumnIndex] = 0
+        // clear notes
+//        _puzzleNotes[_currentRowIndex][_currentColumnIndex].removeAll()
     }
     
-    func updateCellNotes(value: Int) {
+    func changeNoteMode() {
+        isNoteMode = !isNoteMode
+    }
+    
+    // return notes of a cell, if it is empty, should return nil
+    func getNotes(rowIndex: Int, columnIndex: Int) -> String? {
+        if _puzzle.canModifyCell(rowIndex: rowIndex, columnIndex: columnIndex) {
+//            if !_puzzleNotes[rowIndex][columnIndex].isEmpty {
+//                /*
+//                 return puzzle notes here, can try use the code below to convert [Int] to String?
+//                    let notes = _puzzleNotes[rowIndex][columnIndex].map  { Optional(String($0)) }  // [Int] -> [String?]
+//                    let noteString = notes.joined(separator: " ")        // [String?] -> String?
+//                 */
+//            }
+            if rowIndex < 4 {
+                return "1 3 5 8 9"
+            }
+        }
+        return nil
+    }
+    
+    private func _updateCellNotes(value: Int) {
         if !_isCurrentPositionValid() {
             // print("Exception: board row and column position should be in range of 0 ..< boardEdgeCount")
             return
