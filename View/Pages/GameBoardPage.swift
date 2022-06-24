@@ -10,32 +10,24 @@ import SwiftUI
 struct GameBoardPage: View {
     @State private var _isShowingSettingSheet = false
 
-    private let _rowCount: Int
-    private let _columnCount: Int
-    var edgeCount: Int { return _rowCount * _columnCount }
-
-    private let _difficulty: Difficulty
+    private var _viewModel: GameBoardViewModel
     private let _gameStart = GameStatus(status: "Play", displayIconName: "pause")
     private let _gamePause = GameStatus(status: "Pause", displayIconName: "play.fill")
 
-    private var _gameStatus: GameStatus
-    private var _hintLeft = 3
-
     init(_ columnCount: Int, _ rowCount: Int, _ difficulty: Difficulty) {
-        _columnCount = columnCount
-        _rowCount = rowCount
-        _difficulty = difficulty
-        _gameStatus = _gameStart
+        _viewModel = GameBoardViewModel(rowCount, columnCount, difficulty, _gameStart)
     }
 
     var body: some View {
         VStack {
-            GameGrid(_rowCount, _columnCount, _difficulty, _gameStatus)
+            GameGrid(_viewModel)
 
             // game buttons
             HStack {
                 // delete button
-                Button {} label: {
+                Button {
+                    _viewModel.clearCellNumber()
+                } label: {
                     VStack {
                         Image(systemName: "trash")
                             .resizable()
@@ -76,7 +68,7 @@ struct GameBoardPage: View {
                                 .foregroundColor(Color("AppBackground"))
                                 .padding(.bottom, 12)
                                 .padding(.leading, 18)
-                            Image(systemName: "\(_hintLeft).circle.fill")
+                            Image(systemName: "\(_viewModel.hints).circle.fill")
                                 .resizable()
                                 .scaledToFit()
                                 .foregroundColor(Color("AppButton"))
@@ -95,8 +87,10 @@ struct GameBoardPage: View {
 
             // number buttons
             HStack {
-                ForEach(1 ... edgeCount, id: \.self) { number in
-                    Button {} label: {
+                ForEach(1 ... _viewModel.boardEdgeCount, id: \.self) { number in
+                    Button {
+                        _viewModel.fillCellNumber(value: number)
+                    } label: {
                         Text("\(number)")
                             .font(.largeTitle)
                             .foregroundColor(Color("AppButton"))
@@ -142,11 +136,11 @@ struct GameBoardPage: View {
 
 struct GameGrid: View {
     private let _cellSize: Double
-    private let _viewModel: GameBoardViewModel
+    @ObservedObject private var _viewModel: GameBoardViewModel
 
-    init(_ rowCount: Int, _ columnCount: Int, _ difficulty: Difficulty, _ gameStatus: GameStatus) {
-        _viewModel = GameBoardViewModel(rowCount, columnCount, difficulty, gameStatus)
-        _cellSize = Double(UIScreen.screenWidth) / Double(_viewModel.boardEdgeCount)
+    init(_ viewModel: GameBoardViewModel) {
+        _viewModel = viewModel
+        _cellSize = Double(UIScreen.screenWidth) / Double(viewModel.boardEdgeCount)
     }
 
     var body: some View {
@@ -175,11 +169,17 @@ struct GameGrid: View {
                     ForEach(0 ..< _viewModel.boardEdgeCount, id: \.self) { rowIndex in
                         HStack(spacing: -1) {
                             ForEach(0 ..< _viewModel.boardEdgeCount, id: \.self) { columnIndex in
-                                Text(_viewModel.getCellText(rowIndex: rowIndex, columnIndex: columnIndex))
-                                    .font(.title)
-                                    .foregroundColor(Color("AppNumber"))
-                                    .frame(width: _cellSize, height: _cellSize)
-                                    .border(Color("GameGridLine"), width: 1)
+                                Button {
+                                    _viewModel.selectCell(rowIndex: rowIndex, columnIndex: columnIndex)
+                                    // should change highlight or whatever for selected cell
+                                } label: {
+                                    Text(_viewModel.getCellText(rowIndex: rowIndex, columnIndex: columnIndex))
+                                        .font(.title)
+                                        .foregroundColor(Color("AppNumber"))
+                                        .frame(width: _cellSize, height: _cellSize)
+                                        .border(Color("GameGridLine"), width: 1)
+                                }
+                                .frame(maxWidth: .infinity)
                             }
                         }
                     }
