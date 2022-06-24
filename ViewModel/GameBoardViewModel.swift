@@ -23,8 +23,8 @@ class GameBoardViewModel: ObservableObject {
     var blockColumnCount: Int { return _puzzle.columnCount }
     var boardEdgeCount: Int { return _puzzle.edgeCount }
     
-    @Published private var _currentRowIndex = 5
-    @Published private var _currentColumnIndex = 3
+    @Published private var _currentRowIndex = -1
+    @Published private var _currentColumnIndex = -1
     var isNoteMode = false
     
     var isBoardCompleted: Bool {

@@ -190,7 +190,7 @@ struct GameGrid: View {
                                     _viewModel.selectCell(rowIndex: rowIndex, columnIndex: columnIndex)
                                     // should change highlight or whatever for selected cell
                                 } label: {
-                                    let _cellColor = _viewModel.isSelectedCell(rowIndex: rowIndex, columnIndex: columnIndex) ? Color("SelectedCell") : Color("AppBackground")
+                                    let _cellColor = _viewModel.isSelectedCell(rowIndex: rowIndex, columnIndex: columnIndex) ? Color("SelectedCell") : Color("CellBackground")
                                     let _textColor = _viewModel.isPuzzle(rowIndex: rowIndex, columnIndex: columnIndex) ? Color("AppButton") : Color("AppNumber")
                                     Text(_viewModel.getCellText(rowIndex: rowIndex, columnIndex: columnIndex))
                                         .font(.title)
