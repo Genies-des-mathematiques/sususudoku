@@ -23,9 +23,8 @@ class GameBoardViewModel: ObservableObject {
     var blockColumnCount: Int { return _puzzle.columnCount }
     var boardEdgeCount: Int { return _puzzle.edgeCount }
     
-    private var _currentRowIndex = 5
-    private var _currentColumnIndex = 3
-    @Published private var _cellSelected = false
+    @Published private var _currentRowIndex = 5
+    @Published private var _currentColumnIndex = 3
     var isNoteMode = false
     
     var isBoardCompleted: Bool {
@@ -50,7 +49,6 @@ class GameBoardViewModel: ObservableObject {
     }
     
     func isSelectedCell(rowIndex: Int, columnIndex: Int) -> Bool {
-        _cellSelected = false
         return rowIndex == _currentRowIndex && columnIndex == _currentColumnIndex
     }
     
@@ -67,7 +65,6 @@ class GameBoardViewModel: ObservableObject {
     }
     
     func selectCell(rowIndex: Int, columnIndex: Int) {
-        _cellSelected = true
         _currentRowIndex = rowIndex
         _currentColumnIndex = columnIndex
     }
