@@ -16,7 +16,7 @@ class GameBoardViewModel: ObservableObject {
     var difficulty: Difficulty { return _difficulty }
     private var _gameStatus: GameStatus
     var gameStatus: GameStatus { return _gameStatus }
-    private var _hints = 3
+    @Published private var _hints = 3
     var hints: Int { return _hints }
     
     var blockRowCount: Int { return _puzzle.rowCount }

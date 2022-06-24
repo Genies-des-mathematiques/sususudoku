@@ -10,7 +10,7 @@ import SwiftUI
 struct GameBoardPage: View {
     @State private var _isShowingSettingSheet = false
 
-    private var _viewModel: GameBoardViewModel
+    @ObservedObject private var _viewModel: GameBoardViewModel
     private let _gameStart = GameStatus(status: "Play", displayIconName: "pause")
     private let _gamePause = GameStatus(status: "Pause", displayIconName: "play.fill")
 
@@ -55,7 +55,9 @@ struct GameBoardPage: View {
                 .frame(maxWidth: .infinity)
 
                 // hint button
-                Button {} label: {
+                Button {
+                    _viewModel.useHint()
+                } label: {
                     VStack {
                         ZStack {
                             Image(systemName: "lightbulb")
