@@ -25,7 +25,7 @@ class GameBoardViewModel: ObservableObject {
     
     @Published private var _currentRowIndex = -1
     @Published private var _currentColumnIndex = -1
-    @Published var isNoteMode = false
+    @Published private(set) var isNoteMode = false
     
     var isBoardCompleted: Bool {
         _currentPuzzle.first { $0.contains(0) } == nil
@@ -112,7 +112,7 @@ class GameBoardViewModel: ObservableObject {
         _puzzleNotes[_currentRowIndex][_currentColumnIndex].removeAll()
     }
     
-    func changeNoteMode() {
+    func toggleNoteMode() {
         isNoteMode = !isNoteMode
     }
     

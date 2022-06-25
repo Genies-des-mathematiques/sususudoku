@@ -43,7 +43,7 @@ struct GameBoardPage: View {
 
                 // note button
                 Button {
-                    _viewModel.changeNoteMode()
+                    _viewModel.toggleNoteMode()
                 } label: {
                     VStack {
                         let _color = _viewModel.isNoteMode ? Color("AppButton") : Color("GameButton")
