@@ -14,6 +14,7 @@
 		2C982A05286707D100423143 /* WinPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C982A04286707D100423143 /* WinPage.swift */; };
 		A23F4A302867131E005A652B /* TermsOfService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23F4A2F2867131E005A652B /* TermsOfService.swift */; };
 		2C982A05286707D100423143 /* WinPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C982A04286707D100423143 /* WinPage.swift */; };
+		A23F4A302867131E005A652B /* TermsOfService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23F4A2F2867131E005A652B /* TermsOfService.swift */; };
 		A2A288BE2862F989008D9457 /* Difficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A288BD2862F989008D9457 /* Difficulty.swift */; };
 		A2A288C02862FADE008D9457 /* GameBoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A288BF2862FADE008D9457 /* GameBoardViewModel.swift */; };
 		A2A288C22862FF56008D9457 /* GameStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A288C12862FF56008D9457 /* GameStatus.swift */; };
@@ -49,6 +50,7 @@
 		2C982A04286707D100423143 /* WinPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinPage.swift; sourceTree = "<group>"; };
 		A23F4A2F2867131E005A652B /* TermsOfService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfService.swift; sourceTree = "<group>"; };
 		2C982A04286707D100423143 /* WinPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinPage.swift; sourceTree = "<group>"; };
+		A23F4A2F2867131E005A652B /* TermsOfService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfService.swift; sourceTree = "<group>"; };
 		A2A288BD2862F989008D9457 /* Difficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Difficulty.swift; sourceTree = "<group>"; };
 		A2A288BF2862FADE008D9457 /* GameBoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardViewModel.swift; sourceTree = "<group>"; };
 		A2A288C12862FF56008D9457 /* GameStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStatus.swift; sourceTree = "<group>"; };
