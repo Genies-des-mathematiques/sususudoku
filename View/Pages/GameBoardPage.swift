@@ -207,12 +207,12 @@ struct GameGrid: View {
 
             // sudoku grid
             ZStack {
-                Text("Paused")
-                    .font(.largeTitle)
-                    .foregroundColor(Color("AppNumber"))
-                    .frame(width: UIScreen.screenWidth, height: UIScreen.screenWidth)
-
-                if _viewModel.isTimerCounting {
+                if !_viewModel.isTimerCounting {
+                    Text("Paused")
+                        .font(.largeTitle)
+                        .foregroundColor(Color("AppNumber"))
+                        .frame(width: UIScreen.screenWidth, height: UIScreen.screenWidth)
+                } else {
                     // fill grid value
                     VStack(spacing: -1) {
                         ForEach(0 ..< _viewModel.boardEdgeCount, id: \.self) { rowIndex in
