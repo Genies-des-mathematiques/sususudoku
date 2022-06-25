@@ -10,6 +10,6 @@ import Foundation
 
 struct GameRecord: Equatable, Identifiable, Codable {
     @DocumentID var id: String?
-    let score: Int
+    let name: String
     let gameTime: TimeInterval
 }
