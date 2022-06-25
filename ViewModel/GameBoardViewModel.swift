@@ -150,14 +150,14 @@ class GameBoardViewModel: ObservableObject {
     }
     
     private func _updateCellNotes(value: Int) {
-        // remove if number exists in note list, else add number to note list
-        if _puzzleNotes[_currentRowIndex][_currentColumnIndex].contains(value) {
-            if let index = _puzzleNotes[_currentRowIndex][_currentColumnIndex].firstIndex(of: value) {
+        var currentNoteCells = _puzzleNotes[_currentRowIndex][_currentColumnIndex]
+        if currentNoteCells.contains(value) {
+            if let index = currentNoteCells.firstIndex(of: value) {
                 _puzzleNotes[_currentRowIndex][_currentColumnIndex].remove(at: index)
             }
         } else {
-            _puzzleNotes[_currentRowIndex][_currentColumnIndex].append(value)
-            _puzzleNotes[_currentRowIndex][_currentColumnIndex] = _puzzleNotes[_currentRowIndex][_currentColumnIndex].sorted()
+            currentNoteCells.append(value)
+            _puzzleNotes[_currentRowIndex][_currentColumnIndex] = currentNoteCells.sorted()
         }
     }
     
