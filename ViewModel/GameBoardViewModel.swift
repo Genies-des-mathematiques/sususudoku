@@ -53,7 +53,7 @@ class GameBoardViewModel: ObservableObject {
         return rowIndex == _currentRowIndex && columnIndex == _currentColumnIndex
     }
     
-    func isPuzzle(rowIndex: Int, columnIndex: Int) -> Bool {
+    func isPuzzleCell(rowIndex: Int, columnIndex: Int) -> Bool {
         return _puzzle.canModifyCell(rowIndex: rowIndex, columnIndex: columnIndex)
     }
     
