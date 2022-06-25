@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GameBoardPage: View {
     @State private var _isShowingSettingSheet = false
-    @State private var _showAlert: Bool = false
+    @State private var _showAlert = false
 
     @ObservedObject private var _viewModel: GameBoardViewModel
 
