@@ -11,6 +11,7 @@
 		0F4B8ADD286741DA00E72E8C /* Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4B8ADC286741DA00E72E8C /* Conversion.swift */; };
 		0F9431CA285DDEA600A3F288 /* GameBoardPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9431C9285DDEA600A3F288 /* GameBoardPage.swift */; };
 		2C00303E285C8B18002BB9F5 /* Puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C00303D285C8B18002BB9F5 /* Puzzle.swift */; };
+		2C982A05286707D100423143 /* WinPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C982A04286707D100423143 /* WinPage.swift */; };
 		A23F4A302867131E005A652B /* TermsOfService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23F4A2F2867131E005A652B /* TermsOfService.swift */; };
 		A2A288BE2862F989008D9457 /* Difficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A288BD2862F989008D9457 /* Difficulty.swift */; };
 		A2A288C02862FADE008D9457 /* GameBoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A288BF2862FADE008D9457 /* GameBoardViewModel.swift */; };
@@ -36,6 +37,8 @@
 		E16AC841284C2D9F0009F304 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = E16AC840284C2D9F0009F304 /* FirebaseStorage */; };
 		E1CC2A092866F7610089C713 /* CloudStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CC2A082866F7610089C713 /* CloudStore.swift */; };
 		E1CC2A0B2866F8860089C713 /* GameRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CC2A0A2866F8860089C713 /* GameRecord.swift */; };
+		E1CC2A0D2867437E0089C713 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CC2A0C2867437E0089C713 /* Strings.swift */; };
+		E1CC2A0F28675BB70089C713 /* WinPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CC2A0E28675BB70089C713 /* WinPageViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +46,7 @@
 		0F4B8ADC286741DA00E72E8C /* Conversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversion.swift; sourceTree = "<group>"; };
 		0F9431C9285DDEA600A3F288 /* GameBoardPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameBoardPage.swift; sourceTree = "<group>"; };
 		2C00303D285C8B18002BB9F5 /* Puzzle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Puzzle.swift; sourceTree = "<group>"; };
+		2C982A04286707D100423143 /* WinPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinPage.swift; sourceTree = "<group>"; };
 		A23F4A2F2867131E005A652B /* TermsOfService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfService.swift; sourceTree = "<group>"; };
 		A2A288BD2862F989008D9457 /* Difficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Difficulty.swift; sourceTree = "<group>"; };
 		A2A288BF2862FADE008D9457 /* GameBoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardViewModel.swift; sourceTree = "<group>"; };
@@ -58,6 +62,8 @@
 		E16AC82B284C2BBA0009F304 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E1CC2A082866F7610089C713 /* CloudStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudStore.swift; sourceTree = "<group>"; };
 		E1CC2A0A2866F8860089C713 /* GameRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRecord.swift; sourceTree = "<group>"; };
+		E1CC2A0C2867437E0089C713 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		E1CC2A0E28675BB70089C713 /* WinPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinPageViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +110,7 @@
 				0F9431C9285DDEA600A3F288 /* GameBoardPage.swift */,
 				E133B81D2859D1620098D53A /* HomePage.swift */,
 				E14175E5285BA7630038E86D /* SettingSheet.swift */,
+				2C982A04286707D100423143 /* WinPage.swift */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -121,6 +128,7 @@
 			children = (
 				E133B8282859E5210098D53A /* Size.swift */,
 				0F4B8ADC286741DA00E72E8C /* Conversion.swift */,
+				E1CC2A0C2867437E0089C713 /* Strings.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -142,6 +150,7 @@
 			children = (
 				A2A288C32863404A008D9457 /* Data */,
 				A2A288BF2862FADE008D9457 /* GameBoardViewModel.swift */,
+				E1CC2A0E28675BB70089C713 /* WinPageViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -325,12 +334,15 @@
 			files = (
 				E133B8262859E45C0098D53A /* ButtonStyles.swift in Sources */,
 				A2A288C22862FF56008D9457 /* GameStatus.swift in Sources */,
+				E1CC2A0F28675BB70089C713 /* WinPageViewModel.swift in Sources */,
 				E133B81E2859D1620098D53A /* HomePage.swift in Sources */,
 				E1CC2A092866F7610089C713 /* CloudStore.swift in Sources */,
 				A2A288BE2862F989008D9457 /* Difficulty.swift in Sources */,
 				E133B8292859E5210098D53A /* Size.swift in Sources */,
 				A2A288C02862FADE008D9457 /* GameBoardViewModel.swift in Sources */,
+				E1CC2A0D2867437E0089C713 /* Strings.swift in Sources */,
 				0F9431CA285DDEA600A3F288 /* GameBoardPage.swift in Sources */,
+				2C982A05286707D100423143 /* WinPage.swift in Sources */,
 				2C00303E285C8B18002BB9F5 /* Puzzle.swift in Sources */,
 				E1CC2A0B2866F8860089C713 /* GameRecord.swift in Sources */,
 				0F4B8ADD286741DA00E72E8C /* Conversion.swift in Sources */,

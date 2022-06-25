@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import UIPilot
 
 struct GameBoardPage: View {
     @State private var _isShowingSettingSheet = false
     @State private var _showAlert = false
+    @EnvironmentObject private var _pilot: UIPilot<AppRoute>
 
     @ObservedObject private var _viewModel: GameBoardViewModel
 
@@ -113,9 +115,9 @@ struct GameBoardPage: View {
             // send and validate board button
             Button {
                 if _viewModel.isBoardValid {
-                    // win
+                    _viewModel.pauseTimer()
+                    _pilot.push(.WinPage(timeInSeconds: _viewModel.timeInSeconds))
                 } else {
-                    // try again
                     _showAlert = true
                 }
             } label: {
@@ -211,7 +213,6 @@ struct GameGrid: View {
                     Text("Paused")
                         .font(.largeTitle)
                         .foregroundColor(Color("AppNumber"))
-                        .frame(width: UIScreen.screenWidth, height: UIScreen.screenWidth)
                 } else {
                     // fill grid value
                     VStack(spacing: -1) {
@@ -257,6 +258,7 @@ struct GameGrid: View {
                     }
                 }
             }
+            .frame(width: UIScreen.screenWidth, height: UIScreen.screenWidth)
         }
         .padding()
     }
