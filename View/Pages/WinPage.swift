@@ -74,14 +74,17 @@ struct WinPage: View {
                     .font(.title)
                     .bold()
                     .foregroundColor(Color("AppTitle"))
+                    .frame(maxWidth: .infinity)
             }
             // settings button
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     _isShowingSettingSheet = true
                 } label: {
-                    Image(systemName: "gearshape")
-                        .foregroundColor(Color("AppButton"))
+                    VStack {
+                        Image(systemName: "gearshape")
+                            .foregroundColor(Color("AppButton"))
+                    }
                 }
                 .sheet(isPresented: $_isShowingSettingSheet) {
                     NavigationView {
