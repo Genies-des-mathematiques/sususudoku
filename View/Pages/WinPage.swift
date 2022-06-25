@@ -41,7 +41,7 @@ struct WinPage: View {
 
             Button {
                 // TODO: record the name and cost time
-                if name != "" {
+                if !_name.trim().isEmpty {
                     _showSafeSuccessAlert = true
                 } else {
                     _showNoNameAlert = true
@@ -55,7 +55,7 @@ struct WinPage: View {
                     _pilot.popTo(.HomePage)
                 }
             }, message: {
-                Text("Your name: " + name + "\nCost time: " + costTime)
+                Text("Your name: " + _name.trim() + "\nCost time: " + _costTimeString)
             })
             .alert("Alert", isPresented: $_showNoNameAlert, actions: {
                 Button("OK") {}
