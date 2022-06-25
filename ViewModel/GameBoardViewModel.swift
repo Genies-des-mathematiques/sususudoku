@@ -17,6 +17,7 @@ class GameBoardViewModel: ObservableObject {
     
     private let _puzzle: Puzzle
     private let _difficulty: Difficulty
+    private let _gameRecordStore: GameRecordStore
     private var _gameStatus: GameStatus
     
     var difficulty: Difficulty { _difficulty }
@@ -36,6 +37,15 @@ class GameBoardViewModel: ObservableObject {
         _difficulty = difficulty
         _gameStatus = gameStatus
         _puzzleNotes = [[[Int]]](repeating: [[Int]](repeating: [], count: 100), count: 100)
+        _gameRecordStore = CreateGameRecordStore()
+
+        // TODO: remove this line
+        _debugTest()
+    }
+
+    func _debugTest() {
+        let newRecord = GameRecord(name: "TU", gameTimeInSeconds: 123)
+        _ = _gameRecordStore.saveNewRecord(newRecord)
     }
 
     func getCellText(rowIndex: Int, columnIndex: Int) -> String {

@@ -33,6 +33,8 @@
 		E16AC83D284C2D9F0009F304 /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = E16AC83C284C2D9F0009F304 /* FirebasePerformance */; };
 		E16AC83F284C2D9F0009F304 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E16AC83E284C2D9F0009F304 /* FirebaseRemoteConfigSwift */; };
 		E16AC841284C2D9F0009F304 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = E16AC840284C2D9F0009F304 /* FirebaseStorage */; };
+		E1CC2A092866F7610089C713 /* CloudStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CC2A082866F7610089C713 /* CloudStore.swift */; };
+		E1CC2A0B2866F8860089C713 /* GameRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CC2A0A2866F8860089C713 /* GameRecord.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +54,8 @@
 		E16AC821284C19220009F304 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E16AC824284C19220009F304 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E16AC82B284C2BBA0009F304 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E1CC2A082866F7610089C713 /* CloudStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudStore.swift; sourceTree = "<group>"; };
+		E1CC2A0A2866F8860089C713 /* GameRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRecord.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +148,7 @@
 			children = (
 				2C00303D285C8B18002BB9F5 /* Puzzle.swift */,
 				A2A288BD2862F989008D9457 /* Difficulty.swift */,
+				E1CC2A0A2866F8860089C713 /* GameRecord.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -151,6 +156,7 @@
 		E13ED9B1285246B300220337 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				E1CC2A082866F7610089C713 /* CloudStore.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -317,11 +323,13 @@
 				E133B8262859E45C0098D53A /* ButtonStyles.swift in Sources */,
 				A2A288C22862FF56008D9457 /* GameStatus.swift in Sources */,
 				E133B81E2859D1620098D53A /* HomePage.swift in Sources */,
+				E1CC2A092866F7610089C713 /* CloudStore.swift in Sources */,
 				A2A288BE2862F989008D9457 /* Difficulty.swift in Sources */,
 				E133B8292859E5210098D53A /* Size.swift in Sources */,
 				A2A288C02862FADE008D9457 /* GameBoardViewModel.swift in Sources */,
 				0F9431CA285DDEA600A3F288 /* GameBoardPage.swift in Sources */,
 				2C00303E285C8B18002BB9F5 /* Puzzle.swift in Sources */,
+				E1CC2A0B2866F8860089C713 /* GameRecord.swift in Sources */,
 				E16AC81E284C191F0009F304 /* sususudokuApp.swift in Sources */,
 				E14175E6285BA7630038E86D /* SettingSheet.swift in Sources */,
 				A23F4A302867131E005A652B /* TermsOfService.swift in Sources */,
