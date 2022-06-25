@@ -159,7 +159,12 @@ class GameBoardViewModel: ObservableObject {
     private func _convertSecondsToTime(timeInSeconds: Int) -> String {
         let minutes = timeInSeconds / 60
         let seconds = timeInSeconds % 60
-        return String(format: "%02i:%02i", minutes, seconds)
+        let hours = timeInSeconds / 3600
+
+        if timeInSeconds < 3600 {
+            return String(format: "%02i:%02i", minutes, seconds)
+        }
+        return String(format: "%02i:%02i:%02i", hours, minutes, seconds)
     }
     
     private func _isCellValueValid(value: Int) -> Bool {
