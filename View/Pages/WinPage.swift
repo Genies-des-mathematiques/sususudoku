@@ -18,7 +18,7 @@ struct WinPage: View {
 
     var body: some View {
         VStack {
-            Text("Congratulation!!!")
+            Text("Congratulations!!!")
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding(10)
@@ -33,7 +33,8 @@ struct WinPage: View {
             VStack {
                 Text("Please text in your name")
                 TextField("Your Name", text: $_name, prompt: Text("YourName"))
-                    .frame(width: UIScreen.screenWidth - 60, height: 40)
+                    .frame(width: UIScreen.screenWidth - 60, height: 30)
+                    .padding(10)
                     .cornerRadius(40)
                     .overlay(RoundedRectangle(cornerRadius: 40).stroke(Color.blue, lineWidth: 3))
             }
@@ -73,17 +74,14 @@ struct WinPage: View {
                     .font(.title)
                     .bold()
                     .foregroundColor(Color("AppTitle"))
-                    .frame(maxWidth: .infinity)
             }
             // settings button
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     _isShowingSettingSheet = true
                 } label: {
-                    VStack {
-                        Image(systemName: "gearshape")
-                            .foregroundColor(Color("AppButton"))
-                    }
+                    Image(systemName: "gearshape")
+                        .foregroundColor(Color("AppButton"))
                 }
                 .sheet(isPresented: $_isShowingSettingSheet) {
                     NavigationView {
@@ -94,6 +92,7 @@ struct WinPage: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color("AppBackground"))
+        .navigationBarBackButtonHidden(true)
     }
 }
 
