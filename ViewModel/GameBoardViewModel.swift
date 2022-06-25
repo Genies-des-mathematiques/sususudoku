@@ -44,7 +44,7 @@ class GameBoardViewModel: ObservableObject {
     }
 
     func _debugTest() {
-        let newRecord = GameRecord(name: "TU", gameTimeInSecond: 123)
+        let newRecord = GameRecord(name: "TU", gameTimeInSeconds: 123)
         _ = _gameRecordStore.saveNewRecord(newRecord)
     }
 

@@ -13,5 +13,5 @@ struct GameRecord: Equatable, Identifiable, Codable {
     @DocumentID private(set) var id: String?
     @ServerTimestamp private(set) var createdAt: Timestamp?
     let name: String
-    let gameTimeInSecond: Int
+    let gameTimeInSeconds: Int
 }
