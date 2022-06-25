@@ -12,11 +12,9 @@ struct GameBoardPage: View {
     @State private var _showAlert: Bool = false
 
     @ObservedObject private var _viewModel: GameBoardViewModel
-    private let _gameStart = GameStatus(status: "Play", displayIconName: "pause")
-    private let _gamePause = GameStatus(status: "Pause", displayIconName: "play.fill")
 
     init(_ columnCount: Int, _ rowCount: Int, _ difficulty: Difficulty) {
-        _viewModel = GameBoardViewModel(rowCount, columnCount, difficulty, defaultStatus: _gameStart)
+        _viewModel = GameBoardViewModel(rowCount, columnCount, difficulty)
         _viewModel.startTimer()
     }
 
@@ -190,7 +188,9 @@ struct GameGrid: View {
                 Spacer()
 
                 // pause and play button
-                Button {} label: {
+                Button {
+                    _viewModel.isTimerCounting ? _viewModel.pauseTimer() : _viewModel.startTimer()
+                } label: {
                     VStack {
                         Image(systemName: _viewModel.gameStatus.displayIconName)
                             .foregroundColor(Color("GameButton"))

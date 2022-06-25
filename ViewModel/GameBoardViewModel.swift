@@ -13,12 +13,15 @@ class GameBoardViewModel: ObservableObject {
     @Published private var _currentRowIndex = -1
     @Published private var _currentColumnIndex = -1
     @Published private(set) var isNoteMode = false
+    @Published private(set) var isTimerCounting = false
     @Published private(set) var hints = 3
     @Published private(set) var timeString = "00:00"
     
     private let _puzzle: Puzzle
     private let _difficulty: Difficulty
     private let _gameRecordStore: GameRecordStore
+    private let _gameStart = GameStatus(status: "Play", displayIconName: "pause")
+    private let _gamePause = GameStatus(status: "Pause", displayIconName: "play.fill")
     private var _gameStatus: GameStatus
     private var _timer: Timer
     private var _time = 0
@@ -34,11 +37,11 @@ class GameBoardViewModel: ObservableObject {
         isBoardCompleted && _puzzle.isPuzzleCorrect(currentPuzzle: _currentPuzzle)
     }
 
-    init(_ rowCount: Int, _ columnCount: Int, _ difficulty: Difficulty, defaultStatus gameStatus: GameStatus) {
+    init(_ rowCount: Int, _ columnCount: Int, _ difficulty: Difficulty) {
         _puzzle = Puzzle(rowCount, columnCount)
         _currentPuzzle = _puzzle.problemPuzzle
         _difficulty = difficulty
-        _gameStatus = gameStatus
+        _gameStatus = _gameStart
         _puzzleNotes = [[[Int]]](repeating: [[Int]](repeating: [], count: 100), count: 100)
         _timer = Timer()
         _gameRecordStore = CreateGameRecordStore()
@@ -138,10 +141,18 @@ class GameBoardViewModel: ObservableObject {
     }
     
     func startTimer() {
+        _gameStatus = _gameStart
+        isTimerCounting = true
         _timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
             self._time += 1
             self.timeString = self._convertSecondsToTime(timeInSeconds: self._time)
         })
+    }
+    
+    func pauseTimer() {
+        _gameStatus = _gamePause
+        isTimerCounting = false
+        _timer.invalidate()
     }
     
     private func _updateCellNotes(value: Int) {
