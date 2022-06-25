@@ -11,7 +11,7 @@ import os
 
 protocol GameRecordStore {
     func saveNewRecord(_ newRecord: GameRecord) -> Bool
-    func loadAllRecords() -> [GameRecord]
+    func loadAllRecords() async -> [GameRecord]
 }
 
 func CreateGameRecordStore() -> GameRecordStore {
@@ -42,19 +42,11 @@ private struct _GameRecordStoreImpl: GameRecordStore {
         }
     }
 
-    func loadAllRecords() -> [GameRecord] {
-        var records: [GameRecord] = []
-
-        _collection.getDocuments { snapshot, _ in
-            guard let snapshot = snapshot else {
-                return
-            }
-
-            records = snapshot.documents.compactMap { snapshot in
-                try? snapshot.data(as: GameRecord.self)
-            }
+    @MainActor
+    func loadAllRecords() async -> [GameRecord] {
+        guard let snapshot = try? await _collection.getDocuments() else { return [] }
+        return snapshot.documents.compactMap { doc in
+            try? doc.data(as: GameRecord.self)
         }
-
-        return records
     }
 }
