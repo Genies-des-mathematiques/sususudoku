@@ -11,6 +11,11 @@ import UIPilot
 struct ScoreboardPage: View {
     @State private var _isShowingSettingSheet = false
     @EnvironmentObject private var _pilot: UIPilot<AppRoute>
+    @ObservedObject private var _viewModel: ScoreboardViewModel
+
+    init() {
+        _viewModel = ScoreboardViewModel()
+    }
 
     var body: some View {
         VStack {
@@ -19,11 +24,11 @@ struct ScoreboardPage: View {
                     Circle().strokeBorder(.clear, lineWidth: 0)
                     VStack {
                         ScrollView(.vertical) {
-                            ForEach(1 ... 50, id: \.self) { index in
+                            ForEach(0 ..< _viewModel.recordsCount, id: \.self) { index in
                                 HStack(spacing: 20) {
-                                    let _rankText = "\(index)"
-                                    let _nameText = "abcdefghijklmnopqrstuvwxyz"
-                                    let _timeText = "01:00:00"
+                                    let _rankText = _viewModel.getRecordRank(index)
+                                    let _nameText = _viewModel.getRecordName(index)
+                                    let _timeText = _viewModel.getRecordTimeText(index)
                                     Text(_rankText)
                                         .font(.title2)
                                         .fontWeight(.black)
