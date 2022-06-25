@@ -142,11 +142,11 @@ class GameBoardViewModel: ObservableObject {
     
     func startTimer() {
         _gameStatus = _gameStart
-        isTimerCounting = true
         _timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
             self._time += 1
             self.timeString = self._convertSecondsToTime(timeInSeconds: self._time)
         })
+        isTimerCounting = true
     }
     
     func pauseTimer() {
