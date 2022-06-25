@@ -14,11 +14,14 @@ class GameBoardViewModel: ObservableObject {
     @Published private var _currentColumnIndex = -1
     @Published private(set) var isNoteMode = false
     @Published private(set) var hints = 3
+    @Published private(set) var timeString = "00:00"
     
     private let _puzzle: Puzzle
     private let _difficulty: Difficulty
     private let _gameRecordStore: GameRecordStore
     private var _gameStatus: GameStatus
+    private var _timer: Timer
+    private var _time = 0
     
     var difficulty: Difficulty { _difficulty }
     var gameStatus: GameStatus { _gameStatus }
@@ -37,15 +40,8 @@ class GameBoardViewModel: ObservableObject {
         _difficulty = difficulty
         _gameStatus = gameStatus
         _puzzleNotes = [[[Int]]](repeating: [[Int]](repeating: [], count: 100), count: 100)
+        _timer = Timer()
         _gameRecordStore = CreateGameRecordStore()
-
-        // TODO: remove this line
-        _debugTest()
-    }
-
-    func _debugTest() {
-        let newRecord = GameRecord(name: "TU", gameTimeInSeconds: 123)
-        _ = _gameRecordStore.saveNewRecord(newRecord)
     }
 
     func getCellText(rowIndex: Int, columnIndex: Int) -> String {
@@ -141,6 +137,13 @@ class GameBoardViewModel: ObservableObject {
         }
     }
     
+    func startTimer() {
+        _timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
+            self._time += 1
+            self.timeString = self._convertSecondsToTime(timeInSeconds: self._time)
+        })
+    }
+    
     private func _updateCellNotes(value: Int) {
         var currentNoteCells = _puzzleNotes[_currentRowIndex][_currentColumnIndex]
         if currentNoteCells.contains(value) {
@@ -151,6 +154,12 @@ class GameBoardViewModel: ObservableObject {
             currentNoteCells.append(value)
             _puzzleNotes[_currentRowIndex][_currentColumnIndex] = currentNoteCells.sorted()
         }
+    }
+    
+    private func _convertSecondsToTime(timeInSeconds: Int) -> String {
+        let minutes = timeInSeconds / 60
+        let seconds = timeInSeconds % 60
+        return String(format: "%02i:%02i", minutes, seconds)
     }
     
     private func _isCellValueValid(value: Int) -> Bool {

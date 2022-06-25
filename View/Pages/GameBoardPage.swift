@@ -17,6 +17,7 @@ struct GameBoardPage: View {
 
     init(_ columnCount: Int, _ rowCount: Int, _ difficulty: Difficulty) {
         _viewModel = GameBoardViewModel(rowCount, columnCount, difficulty, defaultStatus: _gameStart)
+        _viewModel.startTimer()
     }
 
     var body: some View {
@@ -183,7 +184,7 @@ struct GameGrid: View {
         VStack {
             // game status
             HStack {
-                Text(_viewModel.difficulty.rawValue)
+                Text(_viewModel.timeString)
 
                 // need a spacer to push the elements aside
                 Spacer()
