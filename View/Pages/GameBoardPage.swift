@@ -115,7 +115,8 @@ struct GameBoardPage: View {
             // send and validate board button
             Button {
                 if _viewModel.isBoardValid {
-                    _pilot.push(.WinPage)
+                    _viewModel.pauseTimer()
+                    _pilot.push(.WinPage(timeInSeconds: _viewModel.timeInSeconds))
                 } else {
                     _showAlert = true
                 }

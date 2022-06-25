@@ -21,7 +21,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 enum AppRoute: Equatable {
     case HomePage
     case GameBoardPage
-    case WinPage
+    case WinPage(timeInSeconds: Int)
 }
 
 @main
@@ -41,9 +41,9 @@ struct sususudokuApp: App {
                     return AnyView(
                         GameBoardPage(3, 3, Difficulty.Easy)
                     )
-                case .WinPage:
+                case .WinPage(let timeInSeconds):
                     return AnyView(
-                        WinPage()
+                        WinPage(timeInSeconds: timeInSeconds)
                     )
                 }
             }
