@@ -188,7 +188,7 @@ struct GameGrid: View {
         VStack {
             // game status
             HStack {
-                Text(_viewModel.timeString)
+                Text(_viewModel.timeInSeconds.toTimeString())
 
                 // need a spacer to push the elements aside
                 Spacer()
