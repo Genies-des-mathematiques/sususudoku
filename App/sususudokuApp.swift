@@ -45,6 +45,7 @@ struct sususudokuApp: App {
                 case .WinPage(let timeInSeconds):
                     return AnyView(
                         WinPage(timeInSeconds: timeInSeconds)
+                    )
                 case .ScoreboardPage:
                     return AnyView(
                         ScoreboardPage()
