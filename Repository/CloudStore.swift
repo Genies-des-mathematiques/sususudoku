@@ -15,9 +15,7 @@ protocol GameRecordStore {
 }
 
 func CreateGameRecordStore() -> GameRecordStore {
-    let firestore = Firestore.firestore()
-    let logger = Logger()
-    return _GameRecordStoreImpl(store: firestore, logger: logger)
+    _GameRecordStoreImpl(store: .firestore(), logger: .init())
 }
 
 private struct _GameRecordStoreImpl: GameRecordStore {
