@@ -24,7 +24,7 @@ class GameBoardViewModel: ObservableObject {
     private let _gamePause = GameStatus(status: "Pause", displayIconName: "play.fill")
     private var _gameStatus: GameStatus
     private var _timer: Timer
-    private var _time = 0
+    private var _timeInSeconds = 0
     
     var difficulty: Difficulty { _difficulty }
     var gameStatus: GameStatus { _gameStatus }
