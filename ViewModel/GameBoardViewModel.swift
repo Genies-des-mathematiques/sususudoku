@@ -28,12 +28,7 @@ class GameBoardViewModel: ObservableObject {
     @Published var isNoteMode = false
     
     var isBoardCompleted: Bool {
-        for row in _currentPuzzle {
-            if row.contains(0) {
-                return false
-            }
-        }
-        return true
+        _currentPuzzle.first { $0.contains(0) } == nil
     }
 
     init(_ rowCount: Int, _ columnCount: Int, _ difficulty: Difficulty, _ gameStatus: GameStatus) {
