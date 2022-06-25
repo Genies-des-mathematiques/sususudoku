@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import UIPilot
 
 struct GameBoardPage: View {
     @State private var _isShowingSettingSheet = false
     @State private var _showAlert = false
+    @EnvironmentObject private var _pilot: UIPilot<AppRoute>
 
     @ObservedObject private var _viewModel: GameBoardViewModel
 
@@ -113,9 +115,8 @@ struct GameBoardPage: View {
             // send and validate board button
             Button {
                 if _viewModel.isBoardValid {
-                    // win
+                    _pilot.push(.WinPage)
                 } else {
-                    // try again
                     _showAlert = true
                 }
             } label: {
