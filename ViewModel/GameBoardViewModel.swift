@@ -127,10 +127,10 @@ class GameBoardViewModel: ObservableObject {
     }
     
     func revealAnswer() {
-        for i in 0 ..< 9 {
-            for j in 0 ..< 9 {
-                if _currentPuzzle[i][j] == 0 {
-                    _currentPuzzle[i][j] = _puzzle.getCellAnswer(rowIndex: i, columnIndex: j)
+        for rowIndex in 0 ..< boardEdgeCount {
+            for columnIndex in 0 ..< boardEdgeCount {
+                if isPuzzleCell(rowIndex: rowIndex, columnIndex: columnIndex) {
+                    _currentPuzzle[rowIndex][columnIndex] = _puzzle.getCellAnswer(rowIndex: rowIndex, columnIndex: columnIndex)
                 }
             }
         }
