@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0F2829862860AD5F0027C00C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2829852860AD5F0027C00C /* Constants.swift */; };
+		0F4B8ADD286741DA00E72E8C /* Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4B8ADC286741DA00E72E8C /* Conversion.swift */; };
 		0F9431CA285DDEA600A3F288 /* GameBoardPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9431C9285DDEA600A3F288 /* GameBoardPage.swift */; };
 		2C00303E285C8B18002BB9F5 /* Puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C00303D285C8B18002BB9F5 /* Puzzle.swift */; };
 		A23F4A302867131E005A652B /* TermsOfService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23F4A2F2867131E005A652B /* TermsOfService.swift */; };
@@ -39,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		0F2829852860AD5F0027C00C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		0F4B8ADC286741DA00E72E8C /* Conversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversion.swift; sourceTree = "<group>"; };
 		0F9431C9285DDEA600A3F288 /* GameBoardPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameBoardPage.swift; sourceTree = "<group>"; };
 		2C00303D285C8B18002BB9F5 /* Puzzle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Puzzle.swift; sourceTree = "<group>"; };
 		A23F4A2F2867131E005A652B /* TermsOfService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfService.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				E133B8282859E5210098D53A /* Size.swift */,
+				0F4B8ADC286741DA00E72E8C /* Conversion.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 				0F9431CA285DDEA600A3F288 /* GameBoardPage.swift in Sources */,
 				2C00303E285C8B18002BB9F5 /* Puzzle.swift in Sources */,
 				E1CC2A0B2866F8860089C713 /* GameRecord.swift in Sources */,
+				0F4B8ADD286741DA00E72E8C /* Conversion.swift in Sources */,
 				E16AC81E284C191F0009F304 /* sususudokuApp.swift in Sources */,
 				E14175E6285BA7630038E86D /* SettingSheet.swift in Sources */,
 				A23F4A302867131E005A652B /* TermsOfService.swift in Sources */,

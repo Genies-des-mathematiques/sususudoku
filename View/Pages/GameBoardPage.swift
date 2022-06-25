@@ -9,14 +9,13 @@ import SwiftUI
 
 struct GameBoardPage: View {
     @State private var _isShowingSettingSheet = false
-    @State private var _showAlert: Bool = false
+    @State private var _showAlert = false
 
     @ObservedObject private var _viewModel: GameBoardViewModel
-    private let _gameStart = GameStatus(status: "Play", displayIconName: "pause")
-    private let _gamePause = GameStatus(status: "Pause", displayIconName: "play.fill")
 
     init(_ columnCount: Int, _ rowCount: Int, _ difficulty: Difficulty) {
-        _viewModel = GameBoardViewModel(rowCount, columnCount, difficulty, defaultStatus: _gameStart)
+        _viewModel = GameBoardViewModel(rowCount, columnCount, difficulty)
+        _viewModel.startTimer()
     }
 
     var body: some View {
@@ -39,6 +38,7 @@ struct GameBoardPage: View {
                             .font(.footnote)
                     }
                 }
+                .disabled(!_viewModel.isTimerCounting)
                 .frame(maxWidth: .infinity)
 
                 // note button
@@ -56,6 +56,7 @@ struct GameBoardPage: View {
                             .font(.footnote)
                     }
                 }
+                .disabled(!_viewModel.isTimerCounting)
                 .frame(maxWidth: .infinity)
 
                 // hint button
@@ -86,8 +87,9 @@ struct GameBoardPage: View {
                             .foregroundColor(Color("GameButton"))
                             .font(.footnote)
                     }
-                    .disabled(!_viewModel.canUseHints)
                 }
+                .disabled(!_viewModel.isTimerCounting)
+                .disabled(!_viewModel.canUseHints)
                 .frame(maxWidth: .infinity)
             }
             .frame(height: 50)
@@ -102,6 +104,7 @@ struct GameBoardPage: View {
                             .font(.largeTitle)
                             .foregroundColor(Color("AppButton"))
                     }
+                    .disabled(!_viewModel.isTimerCounting)
                     .frame(maxWidth: .infinity)
                 }
             }
@@ -124,6 +127,7 @@ struct GameBoardPage: View {
             }, message: {
                 Text("Oh no. Your sudoku answer is worng. \nPlease correct your answers and try again.")
             })
+            .disabled(!_viewModel.isTimerCounting)
             .disabled(!_viewModel.isBoardCompleted)
             .buttonStyle(ActivityButtonStyle())
             .frame(minWidth: 0, maxWidth: .infinity)
@@ -138,6 +142,7 @@ struct GameBoardPage: View {
                     .font(.caption)
                     .foregroundColor(Color("AppTitle"))
             }
+            .disabled(!_viewModel.isTimerCounting)
         }
         .toolbar {
             // app title label
@@ -183,13 +188,15 @@ struct GameGrid: View {
         VStack {
             // game status
             HStack {
-                Text(_viewModel.difficulty.rawValue)
+                Text(_viewModel.timeInSeconds.toTimeString())
 
                 // need a spacer to push the elements aside
                 Spacer()
 
                 // pause and play button
-                Button {} label: {
+                Button {
+                    _viewModel.isTimerCounting ? _viewModel.pauseTimer() : _viewModel.startTimer()
+                } label: {
                     VStack {
                         Image(systemName: _viewModel.gameStatus.displayIconName)
                             .foregroundColor(Color("GameButton"))
@@ -200,44 +207,51 @@ struct GameGrid: View {
 
             // sudoku grid
             ZStack {
-                // fill grid value
-                VStack(spacing: -1) {
-                    ForEach(0 ..< _viewModel.boardEdgeCount, id: \.self) { rowIndex in
-                        HStack(spacing: -1) {
-                            ForEach(0 ..< _viewModel.boardEdgeCount, id: \.self) { columnIndex in
-                                Button {
-                                    _viewModel.selectCell(rowIndex: rowIndex, columnIndex: columnIndex)
-                                } label: {
-                                    let _cellColor = _viewModel.isSelectedCell(rowIndex: rowIndex, columnIndex: columnIndex) ? Color("SelectedCell") : Color("CellBackground")
-                                    let _textColor = _viewModel.isPuzzleCell(rowIndex: rowIndex, columnIndex: columnIndex) ? Color("AppButton") : Color("AppNumber")
-                                    let _isShowingNotes = _viewModel.isShowingNotes(rowIndex: rowIndex, columnIndex: columnIndex)
-                                    let _text = _viewModel.getCellText(rowIndex: rowIndex, columnIndex: columnIndex)
-                                    Text(_text)
-                                        .font(_isShowingNotes ? Font.body : Font.title)
-                                        .foregroundColor(_isShowingNotes ? Color("NoteNumber") : _textColor)
-                                        .frame(width: _cellSize, height: _cellSize)
-                                        .scaledToFill()
-                                        .minimumScaleFactor(_isShowingNotes ? 0.5 : 1)
-                                        .background(_cellColor)
-                                        .border(Color("GameGridLine"), width: 1)
+                if !_viewModel.isTimerCounting {
+                    Text("Paused")
+                        .font(.largeTitle)
+                        .foregroundColor(Color("AppNumber"))
+                        .frame(width: UIScreen.screenWidth, height: UIScreen.screenWidth)
+                } else {
+                    // fill grid value
+                    VStack(spacing: -1) {
+                        ForEach(0 ..< _viewModel.boardEdgeCount, id: \.self) { rowIndex in
+                            HStack(spacing: -1) {
+                                ForEach(0 ..< _viewModel.boardEdgeCount, id: \.self) { columnIndex in
+                                    Button {
+                                        _viewModel.selectCell(rowIndex: rowIndex, columnIndex: columnIndex)
+                                    } label: {
+                                        let _cellColor = _viewModel.isSelectedCell(rowIndex: rowIndex, columnIndex: columnIndex) ? Color("SelectedCell") : Color("CellBackground")
+                                        let _textColor = _viewModel.isPuzzleCell(rowIndex: rowIndex, columnIndex: columnIndex) ? Color("AppButton") : Color("AppNumber")
+                                        let _isShowingNotes = _viewModel.isShowingNotes(rowIndex: rowIndex, columnIndex: columnIndex)
+                                        let _text = _viewModel.getCellText(rowIndex: rowIndex, columnIndex: columnIndex)
+                                        Text(_text)
+                                            .font(_isShowingNotes ? Font.body : Font.title)
+                                            .foregroundColor(_isShowingNotes ? Color("NoteNumber") : _textColor)
+                                            .frame(width: _cellSize, height: _cellSize)
+                                            .scaledToFill()
+                                            .minimumScaleFactor(_isShowingNotes ? 0.5 : 1)
+                                            .background(_cellColor)
+                                            .border(Color("GameGridLine"), width: 1)
+                                    }
+                                    .frame(maxWidth: .infinity)
                                 }
-                                .frame(maxWidth: .infinity)
                             }
                         }
                     }
-                }
 
-                // draw grid outline
-                VStack(spacing: -1) {
-                    ForEach(0 ..< _viewModel.blockColumnCount, id: \.self) { _ in
-                        HStack(spacing: -1) {
-                            ForEach(0 ..< _viewModel.blockRowCount, id: \.self) { _ in
-                                Rectangle()
-                                    .foregroundColor(Color("AppBackground").opacity(0))
-                                    .frame(
-                                        width: _cellSize * Double(_viewModel.blockColumnCount) - 1,
-                                        height: _cellSize * Double(_viewModel.blockRowCount) - 1)
-                                    .border(.black, width: 1.5)
+                    // draw grid outline
+                    VStack(spacing: -1) {
+                        ForEach(0 ..< _viewModel.blockColumnCount, id: \.self) { _ in
+                            HStack(spacing: -1) {
+                                ForEach(0 ..< _viewModel.blockRowCount, id: \.self) { _ in
+                                    Rectangle()
+                                        .foregroundColor(Color("AppBackground").opacity(0))
+                                        .frame(
+                                            width: _cellSize * Double(_viewModel.blockColumnCount) - 1,
+                                            height: _cellSize * Double(_viewModel.blockRowCount) - 1)
+                                        .border(.black, width: 1.5)
+                                }
                             }
                         }
                     }

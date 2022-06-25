@@ -13,12 +13,17 @@ class GameBoardViewModel: ObservableObject {
     @Published private var _currentRowIndex = -1
     @Published private var _currentColumnIndex = -1
     @Published private(set) var isNoteMode = false
+    @Published private(set) var isTimerCounting = false
     @Published private(set) var hints = 3
+    @Published private(set) var timeInSeconds = 0
     
     private let _puzzle: Puzzle
     private let _difficulty: Difficulty
     private let _gameRecordStore: GameRecordStore
+    private let _gameStart = GameStatus(status: "Play", displayIconName: "pause")
+    private let _gamePause = GameStatus(status: "Pause", displayIconName: "play.fill")
     private var _gameStatus: GameStatus
+    private var _timer: Timer
     
     var difficulty: Difficulty { _difficulty }
     var gameStatus: GameStatus { _gameStatus }
@@ -31,21 +36,14 @@ class GameBoardViewModel: ObservableObject {
         isBoardCompleted && _puzzle.isPuzzleCorrect(currentPuzzle: _currentPuzzle)
     }
 
-    init(_ rowCount: Int, _ columnCount: Int, _ difficulty: Difficulty, defaultStatus gameStatus: GameStatus) {
+    init(_ rowCount: Int, _ columnCount: Int, _ difficulty: Difficulty) {
         _puzzle = Puzzle(rowCount, columnCount)
         _currentPuzzle = _puzzle.problemPuzzle
         _difficulty = difficulty
-        _gameStatus = gameStatus
+        _gameStatus = _gameStart
         _puzzleNotes = [[[Int]]](repeating: [[Int]](repeating: [], count: 100), count: 100)
+        _timer = Timer()
         _gameRecordStore = CreateGameRecordStore()
-
-        // TODO: remove this line
-        _debugTest()
-    }
-
-    func _debugTest() {
-        let newRecord = GameRecord(name: "TU", gameTimeInSeconds: 123)
-        _ = _gameRecordStore.saveNewRecord(newRecord)
     }
 
     func getCellText(rowIndex: Int, columnIndex: Int) -> String {
@@ -132,6 +130,7 @@ class GameBoardViewModel: ObservableObject {
     }
     
     func revealAnswer() {
+        _puzzleNotes[_currentRowIndex][_currentColumnIndex].removeAll()
         for rowIndex in 0 ..< boardEdgeCount {
             for columnIndex in 0 ..< boardEdgeCount {
                 if isPuzzleCell(rowIndex: rowIndex, columnIndex: columnIndex) {
@@ -139,6 +138,20 @@ class GameBoardViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    func startTimer() {
+        _gameStatus = _gameStart
+        _timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
+            self.timeInSeconds += 1
+        })
+        isTimerCounting = true
+    }
+    
+    func pauseTimer() {
+        _gameStatus = _gamePause
+        _timer.invalidate()
+        isTimerCounting = false
     }
     
     private func _updateCellNotes(value: Int) {
