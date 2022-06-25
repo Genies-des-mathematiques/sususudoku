@@ -10,11 +10,14 @@ import UIPilot
 
 struct WinPage: View {
     @State private var _name = ""
-    @State private var _costTimeString = "01:02:03"
     @State private var _isShowingSettingSheet = false
     @State private var _showSafeSuccessAlert = false
     @State private var _showNoNameAlert = false
     @EnvironmentObject private var _pilot: UIPilot<AppRoute>
+
+    private let _viewModel = WinPageViewModel()
+
+    let timeInSeconds: Int
 
     var body: some View {
         VStack {
@@ -25,7 +28,7 @@ struct WinPage: View {
 
             VStack {
                 Text("Cost Time")
-                Text(_costTimeString)
+                Text(timeInSeconds.toTimeString())
                     .fontWeight(.bold)
             }
             .padding(10)
@@ -41,9 +44,8 @@ struct WinPage: View {
             .padding(10)
 
             Button {
-                // TODO: record the name and cost time
                 if !_name.trim().isEmpty {
-                    _showSafeSuccessAlert = true
+                    _showSafeSuccessAlert = _viewModel.saveGameRecord(gameTimeInSeconds: timeInSeconds, playerName: _name.trim())
                 } else {
                     _showNoNameAlert = true
                 }
@@ -56,7 +58,7 @@ struct WinPage: View {
                     _pilot.popTo(.HomePage)
                 }
             }, message: {
-                Text("Your name: " + _name.trim() + "\nCost time: " + _costTimeString)
+                Text("Your name: " + _name.trim() + "\nCost time: " + timeInSeconds.toTimeString())
             })
             .alert("Alert", isPresented: $_showNoNameAlert, actions: {
                 Button("OK") {}
@@ -74,7 +76,6 @@ struct WinPage: View {
                     .font(.title)
                     .bold()
                     .foregroundColor(Color("AppTitle"))
-                    .frame(maxWidth: .infinity)
             }
             // settings button
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -102,7 +103,7 @@ struct WinPage: View {
 #if DEBUG
 struct WinPage_Previews: PreviewProvider {
     static var previews: some View {
-        WinPage()
+        WinPage(timeInSeconds: 0)
     }
 }
 #endif
