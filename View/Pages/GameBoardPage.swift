@@ -86,6 +86,7 @@ struct GameBoardPage: View {
                             .foregroundColor(Color("GameButton"))
                             .font(.footnote)
                     }
+                    .disabled(!_viewModel.canUseHints)
                 }
                 .frame(maxWidth: .infinity)
             }

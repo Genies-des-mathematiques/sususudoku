@@ -16,8 +16,7 @@ class GameBoardViewModel: ObservableObject {
     var difficulty: Difficulty { return _difficulty }
     private var _gameStatus: GameStatus
     var gameStatus: GameStatus { return _gameStatus }
-    @Published private var _hints = 3
-    var hints: Int { return _hints }
+    @Published private(set) var hints = 3
     
     var blockRowCount: Int { return _puzzle.rowCount }
     var blockColumnCount: Int { return _puzzle.columnCount }
@@ -27,10 +26,8 @@ class GameBoardViewModel: ObservableObject {
     @Published private var _currentColumnIndex = -1
     @Published private(set) var isNoteMode = false
     
-    var isBoardCompleted: Bool {
-        _currentPuzzle.first { $0.contains(0) } == nil
-    }
-    
+    var canUseHints: Bool { hints > 0 }
+    var isBoardCompleted: Bool { _currentPuzzle.first { $0.contains(0) } == nil }
     var isBoardValid: Bool {
         isBoardCompleted && _puzzle.isPuzzleCorrect(currentPuzzle: _currentPuzzle)
     }
@@ -118,25 +115,18 @@ class GameBoardViewModel: ObservableObject {
     
     // automatically fill hint answer to random blank position
     func useHint() {
-        if _hints <= 0 {
+        if !canUseHints {
+            return
+        }
+        if !_isCurrentPositionValid() {
+            return 
+        }
+        if !isPuzzleCell(rowIndex: _currentRowIndex, columnIndex: _currentColumnIndex) {
             return
         }
         
-        var blankPositions: [Int] = []
-        for position in 0 ..< boardEdgeCount * boardEdgeCount {
-            let rowIndex = position / boardEdgeCount
-            let columnIndex = position % boardEdgeCount
-            if _currentPuzzle[rowIndex][columnIndex] == 0 {
-                blankPositions.append(position)
-            }
-        }
-        
-        let hintPosition = blankPositions.randomElement()!
-        let hintRowIndex = hintPosition / boardEdgeCount
-        let hintColumnIndex = hintPosition % boardEdgeCount
-        
-        _currentPuzzle[hintRowIndex][hintColumnIndex] = _puzzle.getCellAnswer(rowIndex: hintRowIndex, columnIndex: hintColumnIndex)
-        _hints -= 1
+        _currentPuzzle[_currentRowIndex][_currentColumnIndex] = _puzzle.getCellAnswer(rowIndex: _currentRowIndex, columnIndex: _currentColumnIndex)
+        hints -= 1
     }
     
     func revealAnswer() {
