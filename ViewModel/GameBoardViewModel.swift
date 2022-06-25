@@ -139,11 +139,11 @@ class GameBoardViewModel: ObservableObject {
         _hints -= 1
     }
     
-    func fillHollow() {
+    func revealAnswer() {
         for i in 0 ..< 9 {
             for j in 0 ..< 9 {
                 if _currentPuzzle[i][j] == 0 {
-                    _currentPuzzle[i][j] = 1
+                    _currentPuzzle[i][j] = _puzzle.getCellAnswer(rowIndex: i, columnIndex: j)
                 }
             }
         }

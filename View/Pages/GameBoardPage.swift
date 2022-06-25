@@ -126,11 +126,14 @@ struct GameBoardPage: View {
             .disabled(!_viewModel.isBoardCompleted)
             .buttonStyle(ActivityButtonStyle())
             .frame(minWidth: 0, maxWidth: .infinity)
+            .padding()
 
             Button {
-                _viewModel.fillHollow()
+                _viewModel.revealAnswer()
             } label: {
-                Text("Fill hollow")
+                Text("Copyright © 2022 SuSuSudoku Ltd,.")
+                    .font(.caption)
+                    .foregroundColor(Color("AppTitle"))
             }
 
             // need a spacer to push everything to the top
