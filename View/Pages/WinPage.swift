@@ -9,11 +9,11 @@ import SwiftUI
 import UIPilot
 
 struct WinPage: View {
-    @State private var name = ""
-    @State private var costTime = "01:02:03"
-    @State private var _isShowingSettingSheet: Bool = false
-    @State private var _showSafeSuccessAlert: Bool = false
-    @State private var _showNoNameAlert: Bool = false
+    @State private var _name = ""
+    @State private var _costTimeString = "01:02:03"
+    @State private var _isShowingSettingSheet = false
+    @State private var _showSafeSuccessAlert = false
+    @State private var _showNoNameAlert = false
     @EnvironmentObject private var _pilot: UIPilot<AppRoute>
 
     var body: some View {
