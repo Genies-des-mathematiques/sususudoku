@@ -8,24 +8,22 @@
 import Foundation
 
 class GameBoardViewModel: ObservableObject {
-    private let _puzzle: Puzzle
     @Published private var _currentPuzzle: [[Int]] = []
     @Published private var _puzzleNotes: [[[Int]]] = []
-
-    private let _difficulty: Difficulty
-    var difficulty: Difficulty { return _difficulty }
-    private var _gameStatus: GameStatus
-    var gameStatus: GameStatus { return _gameStatus }
+    @Published private(set) var _currentRowIndex = -1
+    @Published private(set) var _currentColumnIndex = -1
+    @Published private(set) var isNoteMode = false
     @Published private(set) var hints = 3
     
-    var blockRowCount: Int { return _puzzle.rowCount }
-    var blockColumnCount: Int { return _puzzle.columnCount }
-    var boardEdgeCount: Int { return _puzzle.edgeCount }
+    private let _puzzle: Puzzle
+    private let _difficulty: Difficulty
+    private var _gameStatus: GameStatus
     
-    @Published private var _currentRowIndex = -1
-    @Published private var _currentColumnIndex = -1
-    @Published private(set) var isNoteMode = false
-    
+    var difficulty: Difficulty { _difficulty }
+    var gameStatus: GameStatus { _gameStatus }
+    var blockRowCount: Int { _puzzle.rowCount }
+    var blockColumnCount: Int { _puzzle.columnCount }
+    var boardEdgeCount: Int { _puzzle.edgeCount }
     var canUseHints: Bool { hints > 0 }
     var isBoardCompleted: Bool { _currentPuzzle.first { $0.contains(0) } == nil }
     var isBoardValid: Bool {
@@ -113,13 +111,12 @@ class GameBoardViewModel: ObservableObject {
         isNoteMode = !isNoteMode
     }
     
-    // automatically fill hint answer to random blank position
     func useHint() {
         if !canUseHints {
             return
         }
         if !_isCurrentPositionValid() {
-            return 
+            return
         }
         if !isPuzzleCell(rowIndex: _currentRowIndex, columnIndex: _currentColumnIndex) {
             return
