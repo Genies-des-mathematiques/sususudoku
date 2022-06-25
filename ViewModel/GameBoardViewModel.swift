@@ -41,7 +41,7 @@ class GameBoardViewModel: ObservableObject {
         _currentPuzzle = _puzzle.problemPuzzle
         _difficulty = difficulty
         _gameStatus = _gameStart
-        _puzzleNotes = [[[Int]]](repeating: [[Int]](repeating: [], count: 100), count: 100)
+        _puzzleNotes = [[[Int]]](repeating: [[Int]](repeating: [], count: _puzzle.edgeCount), count: _puzzle.edgeCount)
         _timer = Timer()
         _gameRecordStore = CreateGameRecordStore()
     }
@@ -130,10 +130,10 @@ class GameBoardViewModel: ObservableObject {
     }
     
     func revealAnswer() {
-        _puzzleNotes[_currentRowIndex][_currentColumnIndex].removeAll()
         for rowIndex in 0 ..< boardEdgeCount {
             for columnIndex in 0 ..< boardEdgeCount {
                 if isPuzzleCell(rowIndex: rowIndex, columnIndex: columnIndex) {
+                    _puzzleNotes[rowIndex][columnIndex].removeAll()
                     _currentPuzzle[rowIndex][columnIndex] = _puzzle.getCellAnswer(rowIndex: rowIndex, columnIndex: columnIndex)
                 }
             }
