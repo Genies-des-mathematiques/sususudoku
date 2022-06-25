@@ -144,7 +144,7 @@ class GameBoardViewModel: ObservableObject {
         _gameStatus = _gameStart
         _timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
             self._timeInSeconds += 1
-            self.timeString = self._toTimeStringFrom(timeInSeconds: self._timeInSeconds)
+            self.timeString = self._timeInSeconds.toTimeString()
         })
         isTimerCounting = true
     }
@@ -165,18 +165,6 @@ class GameBoardViewModel: ObservableObject {
             currentNoteCells.append(value)
             _puzzleNotes[_currentRowIndex][_currentColumnIndex] = currentNoteCells.sorted()
         }
-    }
-    
-    private func _toTimeStringFrom(timeInSeconds: Int) -> String {
-        let minutes = timeInSeconds / 60
-        let seconds = timeInSeconds % 60
-
-        if timeInSeconds < 3600 {
-            return String(format: "%02i:%02i", minutes, seconds)
-        }
-
-        let hours = minutes / 60
-        return String(format: "%02i:%02i:%02i", hours, minutes, seconds)
     }
     
     private func _isCellValueValid(value: Int) -> Bool {
