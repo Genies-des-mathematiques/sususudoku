@@ -167,7 +167,7 @@ class GameBoardViewModel: ObservableObject {
         }
     }
     
-    private func _convertSecondsToTime(timeInSeconds: Int) -> String {
+    private func _toTimeStringFrom(timeInSeconds: Int) -> String {
         let minutes = timeInSeconds / 60
         let seconds = timeInSeconds % 60
 
