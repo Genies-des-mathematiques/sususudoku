@@ -151,8 +151,8 @@ class GameBoardViewModel: ObservableObject {
     
     func pauseTimer() {
         _gameStatus = _gamePause
-        isTimerCounting = false
         _timer.invalidate()
+        isTimerCounting = false
     }
     
     private func _updateCellNotes(value: Int) {
