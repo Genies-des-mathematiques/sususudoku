@@ -21,14 +21,26 @@ struct HomePage: View {
                         Text(Constants.appTitle)
                             .font(.system(size: g.size.height > g.size.width ? g.size.width * 0.1 : g.size.height * 0.1))
                             .fontWeight(.black)
+                        
                         Button {
                             _pilot.push(.GameBoardPage)
                         } label: {
-                            Text("新遊戲")
+                            Text("New Game")
                                 .foregroundColor(.white)
                         }
                         .buttonStyle(ActivityButtonStyle())
                         .frame(minWidth: 0, maxWidth: .infinity)
+                        .padding()
+                        
+                        Button {
+                            _pilot.push(.ScoreboardPage)
+                        } label: {
+                            Text("Scoreboard")
+                                .foregroundColor(.white)
+                        }
+                        .buttonStyle(ActivityButtonStyle())
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .padding()
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
