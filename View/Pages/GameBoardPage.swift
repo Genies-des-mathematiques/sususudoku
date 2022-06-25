@@ -127,7 +127,9 @@ struct GameBoardPage: View {
             .disabled(!_viewModel.isBoardCompleted)
             .buttonStyle(ActivityButtonStyle())
             .frame(minWidth: 0, maxWidth: .infinity)
-            .padding()
+
+            // need a spacer to push everything to the top
+            Spacer()
 
             Button {
                 _viewModel.revealAnswer()
@@ -136,9 +138,6 @@ struct GameBoardPage: View {
                     .font(.caption)
                     .foregroundColor(Color("AppTitle"))
             }
-
-            // need a spacer to push everything to the top
-            Spacer()
         }
         .toolbar {
             // app title label
