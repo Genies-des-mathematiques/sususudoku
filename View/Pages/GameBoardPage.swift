@@ -108,7 +108,7 @@ struct GameBoardPage: View {
 
             // send and validate board button
             Button {
-                if _viewModel.validateBoard() {
+                if _viewModel.isBoardValid {
                     // win
                 } else {
                     // try again
@@ -126,7 +126,7 @@ struct GameBoardPage: View {
             .disabled(!_viewModel.isBoardCompleted)
             .buttonStyle(ActivityButtonStyle())
             .frame(minWidth: 0, maxWidth: .infinity)
-            
+
             Button {
                 _viewModel.fillHollow()
             } label: {

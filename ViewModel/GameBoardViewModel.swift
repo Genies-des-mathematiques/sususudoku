@@ -30,6 +30,10 @@ class GameBoardViewModel: ObservableObject {
     var isBoardCompleted: Bool {
         _currentPuzzle.first { $0.contains(0) } == nil
     }
+    
+    var isBoardValid: Bool {
+        isBoardCompleted && _puzzle.isPuzzleCorrect(currentPuzzle: _currentPuzzle)
+    }
 
     init(_ rowCount: Int, _ columnCount: Int, _ difficulty: Difficulty, _ gameStatus: GameStatus) {
         _puzzle = Puzzle(rowCount, columnCount)
@@ -64,14 +68,6 @@ class GameBoardViewModel: ObservableObject {
         
         let cellValue = _currentPuzzle[rowIndex][columnIndex]
         return cellValue == 0 && !_puzzleNotes[rowIndex][columnIndex].isEmpty
-    }
-    
-    func validateBoard() -> Bool {
-        if !isBoardCompleted {
-            return false
-        }
-        
-        return _puzzle.isPuzzleCorrect(currentPuzzle: _currentPuzzle)
     }
     
     func selectCell(rowIndex: Int, columnIndex: Int) {
@@ -146,7 +142,7 @@ class GameBoardViewModel: ObservableObject {
     func fillHollow() {
         for i in 0 ..< 9 {
             for j in 0 ..< 9 {
-                if _currentPuzzle[i][j] == 0 {                    
+                if _currentPuzzle[i][j] == 0 {
                     _currentPuzzle[i][j] = 1
                 }
             }
