@@ -13,21 +13,31 @@ struct SettingSheet: View {
     var body: some View {
         List {
             Section {
-                SettingItem(iconName: "gearshape", itemName: "設定", iconColor: .red)
-                SettingItem(iconName: "graduationcap", itemName: "遊玩方式", iconColor: .orange)
-            }
-            Section {
-                SettingItem(iconName: "info.circle", itemName: "關於遊戲", iconColor: .blue)
-                SettingItem(iconName: "questionmark.circle", itemName: "幫助", iconColor: .green)
+                HStack {
+                    Image(systemName: "info.circle")
+                        .foregroundColor(.blue)
+                    NavigationLink("About") {
+                        TermsOfService()
+                    }
+                }
+
+                HStack {
+                    Image(systemName: "questionmark.circle")
+                        .foregroundColor(.green)
+                    Link(destination: URL(string: "https://sudoku.com/sudoku-rules/")!, label: {
+                        Text("Support")
+                            .foregroundColor(.black)
+                    })
+                }
             }
         }
         .listStyle(GroupedListStyle())
         .toolbar {
             ToolbarItem(placement: .principal) {
-                Text("選項")
+                Text("Options")
             }
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button("完成") {
+                Button("Done") {
                     _dismiss()
                 }
             }
