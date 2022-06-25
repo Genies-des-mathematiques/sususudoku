@@ -62,7 +62,7 @@ class GameBoardViewModel: ObservableObject {
     }
     
     func isShowingNotes(rowIndex: Int, columnIndex: Int) -> Bool {
-        if !(rowIndex >= 0 && rowIndex < boardEdgeCount && columnIndex >= 0 && columnIndex < boardEdgeCount) {
+        if !_isIndexValid(index: rowIndex) || !_isIndexValid(index: columnIndex) {
             return false
         }
         
@@ -166,6 +166,10 @@ class GameBoardViewModel: ObservableObject {
     }
     
     private func _isCurrentPositionValid() -> Bool {
-        return _currentRowIndex >= 0 && _currentRowIndex < boardEdgeCount && _currentColumnIndex >= 0 && _currentColumnIndex < boardEdgeCount
+        return _isIndexValid(index: _currentRowIndex) && _isIndexValid(index: _currentColumnIndex)
+    }
+    
+    private func _isIndexValid(index: Int) -> Bool {
+        return index >= 0 && index < boardEdgeCount
     }
 }
