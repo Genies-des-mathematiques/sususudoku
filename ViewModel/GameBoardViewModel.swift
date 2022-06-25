@@ -35,7 +35,7 @@ class GameBoardViewModel: ObservableObject {
         isBoardCompleted && _puzzle.isPuzzleCorrect(currentPuzzle: _currentPuzzle)
     }
 
-    init(_ rowCount: Int, _ columnCount: Int, _ difficulty: Difficulty, _ gameStatus: GameStatus) {
+    init(_ rowCount: Int, _ columnCount: Int, _ difficulty: Difficulty, defaultStatus gameStatus: GameStatus) {
         _puzzle = Puzzle(rowCount, columnCount)
         _currentPuzzle = _puzzle.problemPuzzle
         _difficulty = difficulty

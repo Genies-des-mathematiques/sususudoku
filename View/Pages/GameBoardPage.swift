@@ -16,7 +16,7 @@ struct GameBoardPage: View {
     private let _gamePause = GameStatus(status: "Pause", displayIconName: "play.fill")
 
     init(_ columnCount: Int, _ rowCount: Int, _ difficulty: Difficulty) {
-        _viewModel = GameBoardViewModel(rowCount, columnCount, difficulty, _gameStart)
+        _viewModel = GameBoardViewModel(rowCount, columnCount, difficulty, defaultStatus: _gameStart)
     }
 
     var body: some View {
