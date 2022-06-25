@@ -11,5 +11,5 @@ import Foundation
 struct GameRecord: Equatable, Identifiable, Codable {
     @DocumentID var id: String?
     let name: String
-    let gameTime: TimeInterval
+    let gameTimeInSecond: Int
 }
