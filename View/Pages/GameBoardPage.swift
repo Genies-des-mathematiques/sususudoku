@@ -213,7 +213,6 @@ struct GameGrid: View {
                     Text("Paused")
                         .font(.largeTitle)
                         .foregroundColor(Color("AppNumber"))
-                        .frame(width: UIScreen.screenWidth, height: UIScreen.screenWidth)
                 } else {
                     // fill grid value
                     VStack(spacing: -1) {
@@ -259,6 +258,7 @@ struct GameGrid: View {
                     }
                 }
             }
+            .frame(width: UIScreen.screenWidth, height: UIScreen.screenWidth)
         }
         .padding()
     }
