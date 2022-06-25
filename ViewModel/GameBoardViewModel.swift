@@ -148,6 +148,16 @@ class GameBoardViewModel: ObservableObject {
         _hints -= 1
     }
     
+    func fillHollow() {
+        for i in 0 ..< 9 {
+            for j in 0 ..< 9 {
+                if _currentPuzzle[i][j] == 0 {                    
+                    _currentPuzzle[i][j] = 1
+                }
+            }
+        }
+    }
+    
     private func _updateCellNotes(value: Int) {
         // remove if number exists in note list, else add number to note list
         if _puzzleNotes[_currentRowIndex][_currentColumnIndex].contains(value) {

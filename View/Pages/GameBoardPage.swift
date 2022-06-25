@@ -9,6 +9,7 @@ import SwiftUI
 
 struct GameBoardPage: View {
     @State private var _isShowingSettingSheet = false
+    @State private var _showAlert: Bool = false
 
     @ObservedObject private var _viewModel: GameBoardViewModel
     private let _gameStart = GameStatus(status: "Play", displayIconName: "pause")
@@ -111,14 +112,26 @@ struct GameBoardPage: View {
                     // win
                 } else {
                     // try again
+                    _showAlert = true
                 }
             } label: {
                 Text("送出")
                     .foregroundColor(.white)
             }
+            .alert("Failed", isPresented: $_showAlert, actions: {
+                Button("Continue") {}
+            }, message: {
+                Text("Oh no. Your sudoku answer is worng. \nPlease correct your answers and try again.")
+            })
             .disabled(!_viewModel.isBoardCompleted)
             .buttonStyle(ActivityButtonStyle())
             .frame(minWidth: 0, maxWidth: .infinity)
+            
+            Button {
+                _viewModel.fillHollow()
+            } label: {
+                Text("Fill hollow")
+            }
 
             // need a spacer to push everything to the top
             Spacer()
@@ -197,7 +210,7 @@ struct GameGrid: View {
                                     let _isShowingNotes = _viewModel.isShowingNotes(rowIndex: rowIndex, columnIndex: columnIndex)
                                     let _text = _viewModel.getCellText(rowIndex: rowIndex, columnIndex: columnIndex)
                                     Text(_text)
-                                        .font(_isShowingNotes ? Font.body : Font.title) 
+                                        .font(_isShowingNotes ? Font.body : Font.title)
                                         .foregroundColor(_isShowingNotes ? Color("NoteNumber") : _textColor)
                                         .frame(width: _cellSize, height: _cellSize)
                                         .scaledToFill()
@@ -239,28 +252,3 @@ struct GameBoardView_Previews: PreviewProvider {
     }
 }
 #endif
-
-
-//struct NoteModifier: ViewModifier {
-//    let isNote: Bool
-//
-//    func body(content: Content) -> some View {
-//        Group {
-//            if isNote {
-//                Text(_text)
-//                .foregroundColor(Color("NoteNumber"))
-//                .frame(width: _cellSize, height: _cellSize)
-//                .background(_cellColor)
-//                .border(Color("GameGridLine"), width: 1)
-//            } else {
-//                content
-//            }
-//        }
-//    }
-//}
-//
-//extension View {
-//    func isNote(_ bool: Bool) -> some View {
-//        modifier(NoteModifier(isNote: <#T##Bool#>))
-//    }
-//}
