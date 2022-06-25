@@ -10,8 +10,8 @@ import Foundation
 class GameBoardViewModel: ObservableObject {
     @Published private var _currentPuzzle: [[Int]] = []
     @Published private var _puzzleNotes: [[[Int]]] = []
-    @Published private(set) var _currentRowIndex = -1
-    @Published private(set) var _currentColumnIndex = -1
+    @Published private var _currentRowIndex = -1
+    @Published private var _currentColumnIndex = -1
     @Published private(set) var isNoteMode = false
     @Published private(set) var hints = 3
     
@@ -72,15 +72,12 @@ class GameBoardViewModel: ObservableObject {
     
     func fillCellNumber(value: Int) {
         if !_isCurrentPositionValid() {
-            // print("Exception: board row and column position should be in range of 0 ..< boardEdgeCount")
             return
         }
         if !_isCellValueValid(value: value) {
-            // print("Exception: value should be in range of 1 ... boardEdgeCount")
             return
         }
         if !_puzzle.canModifyCell(rowIndex: _currentRowIndex, columnIndex: _currentColumnIndex) {
-            // print("Exception: cell cannot take notes because it is part of the given puzzle")
             return
         }
         
@@ -95,11 +92,9 @@ class GameBoardViewModel: ObservableObject {
     
     func clearCellNumber() {
         if !_isCurrentPositionValid() {
-            // print("Exception: board row and column position should be in range of 0 ..< boardEdgeCount")
             return
         }
         if !_puzzle.canModifyCell(rowIndex: _currentRowIndex, columnIndex: _currentColumnIndex) {
-            // print("Exception: cell cannot be cleared because it is part of the given puzzle")
             return
         }
         
