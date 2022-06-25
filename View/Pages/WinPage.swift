@@ -25,14 +25,14 @@ struct WinPage: View {
 
             VStack {
                 Text("Cost Time")
-                Text(costTime)
+                Text(_costTimeString)
                     .fontWeight(.bold)
             }
             .padding(10)
 
             VStack {
                 Text("Please text in your name")
-                TextField("Your Name", text: $name, prompt: Text("YourName"))
+                TextField("Your Name", text: $_name, prompt: Text("YourName"))
                     .frame(width: UIScreen.screenWidth - 60, height: 40)
                     .cornerRadius(40)
                     .overlay(RoundedRectangle(cornerRadius: 40).stroke(Color.blue, lineWidth: 3))
