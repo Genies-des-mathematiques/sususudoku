@@ -9,7 +9,6 @@ import Foundation
 
 final class Puzzle {
     private var _answerPuzzle: [[Int]] = []
-    var answerPuzzle: [[Int]] { return _answerPuzzle }
     private var _problemPuzzle: [[Int]] = []
     var problemPuzzle: [[Int]] { return _problemPuzzle }
     private var _puzzleSolvesCount = 0
@@ -24,6 +23,25 @@ final class Puzzle {
         _rowCount = rowCount
         _columnCount = columnCount
         resetGame()
+    }
+    
+    func isPuzzleCorrect(currentPuzzle: [[Int]]) -> Bool {
+        for i in 0 ..< edgeCount {
+            for j in 0 ..< edgeCount {
+                if currentPuzzle[i][j] != _answerPuzzle[i][j] {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+    
+    func canModifyCell(rowIndex: Int, columnIndex: Int) -> Bool {
+        return _problemPuzzle[rowIndex][columnIndex] == 0
+    }
+    
+    func getCellAnswer(rowIndex: Int, columnIndex: Int) -> Int {
+        return _answerPuzzle[rowIndex][columnIndex]
     }
 
     func resetGame() {

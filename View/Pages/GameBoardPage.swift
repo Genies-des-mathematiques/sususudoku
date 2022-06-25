@@ -9,33 +9,26 @@ import SwiftUI
 
 struct GameBoardPage: View {
     @State private var _isShowingSettingSheet = false
+    @State private var _showAlert: Bool = false
 
-    private let _rowCount: Int
-    private let _columnCount: Int
-    var edgeCount: Int { return _rowCount * _columnCount }
-
-    private let _difficulty: Difficulty
+    @ObservedObject private var _viewModel: GameBoardViewModel
     private let _gameStart = GameStatus(status: "Play", displayIconName: "pause")
     private let _gamePause = GameStatus(status: "Pause", displayIconName: "play.fill")
 
-    private var _gameStatus: GameStatus
-    private var _hintLeft = 3
-
     init(_ columnCount: Int, _ rowCount: Int, _ difficulty: Difficulty) {
-        _columnCount = columnCount
-        _rowCount = rowCount
-        _difficulty = difficulty
-        _gameStatus = _gameStart
+        _viewModel = GameBoardViewModel(rowCount, columnCount, difficulty, defaultStatus: _gameStart)
     }
 
     var body: some View {
         VStack {
-            GameGrid(_rowCount, _columnCount, _difficulty, _gameStatus)
+            GameGrid(_viewModel)
 
             // game buttons
             HStack {
                 // delete button
-                Button {} label: {
+                Button {
+                    _viewModel.clearCellNumber()
+                } label: {
                     VStack {
                         Image(systemName: "trash")
                             .resizable()
@@ -49,21 +42,26 @@ struct GameBoardPage: View {
                 .frame(maxWidth: .infinity)
 
                 // note button
-                Button {} label: {
+                Button {
+                    _viewModel.toggleNoteMode()
+                } label: {
                     VStack {
+                        let _color = _viewModel.isNoteMode ? Color("AppButton") : Color("GameButton")
                         Image(systemName: "pencil.tip")
                             .resizable()
                             .scaledToFit()
-                            .foregroundColor(Color("GameButton"))
+                            .foregroundColor(_color)
                         Text("筆記")
-                            .foregroundColor(Color("GameButton"))
+                            .foregroundColor(_color)
                             .font(.footnote)
                     }
                 }
                 .frame(maxWidth: .infinity)
 
                 // hint button
-                Button {} label: {
+                Button {
+                    _viewModel.useHint()
+                } label: {
                     VStack {
                         ZStack {
                             Image(systemName: "lightbulb")
@@ -76,7 +74,7 @@ struct GameBoardPage: View {
                                 .foregroundColor(Color("AppBackground"))
                                 .padding(.bottom, 12)
                                 .padding(.leading, 18)
-                            Image(systemName: "\(_hintLeft).circle.fill")
+                            Image(systemName: "\(_viewModel.hints).circle.fill")
                                 .resizable()
                                 .scaledToFit()
                                 .foregroundColor(Color("AppButton"))
@@ -88,6 +86,7 @@ struct GameBoardPage: View {
                             .foregroundColor(Color("GameButton"))
                             .font(.footnote)
                     }
+                    .disabled(!_viewModel.canUseHints)
                 }
                 .frame(maxWidth: .infinity)
             }
@@ -95,8 +94,10 @@ struct GameBoardPage: View {
 
             // number buttons
             HStack {
-                ForEach(1 ... edgeCount, id: \.self) { number in
-                    Button {} label: {
+                ForEach(1 ... _viewModel.boardEdgeCount, id: \.self) { number in
+                    Button {
+                        _viewModel.fillCellNumber(value: number)
+                    } label: {
                         Text("\(number)")
                             .font(.largeTitle)
                             .foregroundColor(Color("AppButton"))
@@ -106,8 +107,37 @@ struct GameBoardPage: View {
             }
             .padding(.horizontal)
 
+            // send and validate board button
+            Button {
+                if _viewModel.isBoardValid {
+                    // win
+                } else {
+                    // try again
+                    _showAlert = true
+                }
+            } label: {
+                Text("送出")
+                    .foregroundColor(.white)
+            }
+            .alert("Failed", isPresented: $_showAlert, actions: {
+                Button("Continue") {}
+            }, message: {
+                Text("Oh no. Your sudoku answer is worng. \nPlease correct your answers and try again.")
+            })
+            .disabled(!_viewModel.isBoardCompleted)
+            .buttonStyle(ActivityButtonStyle())
+            .frame(minWidth: 0, maxWidth: .infinity)
+
             // need a spacer to push everything to the top
             Spacer()
+
+            Button {
+                _viewModel.revealAnswer()
+            } label: {
+                Text("Copyright © 2022 SuSuSudoku Ltd,.")
+                    .font(.caption)
+                    .foregroundColor(Color("AppTitle"))
+            }
         }
         .toolbar {
             // app title label
@@ -142,11 +172,11 @@ struct GameBoardPage: View {
 
 struct GameGrid: View {
     private let _cellSize: Double
-    private let _viewModel: GameBoardViewModel
+    @ObservedObject private var _viewModel: GameBoardViewModel
 
-    init(_ rowCount: Int, _ columnCount: Int, _ difficulty: Difficulty, _ gameStatus: GameStatus) {
-        _viewModel = GameBoardViewModel(rowCount, columnCount, difficulty, gameStatus)
-        _cellSize = Double(UIScreen.screenWidth) / Double(_viewModel.boardEdgeCount)
+    init(_ viewModel: GameBoardViewModel) {
+        _viewModel = viewModel
+        _cellSize = Double(UIScreen.screenWidth) / Double(viewModel.boardEdgeCount)
     }
 
     var body: some View {
@@ -175,11 +205,23 @@ struct GameGrid: View {
                     ForEach(0 ..< _viewModel.boardEdgeCount, id: \.self) { rowIndex in
                         HStack(spacing: -1) {
                             ForEach(0 ..< _viewModel.boardEdgeCount, id: \.self) { columnIndex in
-                                Text(_viewModel.getCellText(rowIndex: rowIndex, columnIndex: columnIndex))
-                                    .font(.title)
-                                    .foregroundColor(Color("AppNumber"))
-                                    .frame(width: _cellSize, height: _cellSize)
-                                    .border(Color("GameGridLine"), width: 1)
+                                Button {
+                                    _viewModel.selectCell(rowIndex: rowIndex, columnIndex: columnIndex)
+                                } label: {
+                                    let _cellColor = _viewModel.isSelectedCell(rowIndex: rowIndex, columnIndex: columnIndex) ? Color("SelectedCell") : Color("CellBackground")
+                                    let _textColor = _viewModel.isPuzzleCell(rowIndex: rowIndex, columnIndex: columnIndex) ? Color("AppButton") : Color("AppNumber")
+                                    let _isShowingNotes = _viewModel.isShowingNotes(rowIndex: rowIndex, columnIndex: columnIndex)
+                                    let _text = _viewModel.getCellText(rowIndex: rowIndex, columnIndex: columnIndex)
+                                    Text(_text)
+                                        .font(_isShowingNotes ? Font.body : Font.title)
+                                        .foregroundColor(_isShowingNotes ? Color("NoteNumber") : _textColor)
+                                        .frame(width: _cellSize, height: _cellSize)
+                                        .scaledToFill()
+                                        .minimumScaleFactor(_isShowingNotes ? 0.5 : 1)
+                                        .background(_cellColor)
+                                        .border(Color("GameGridLine"), width: 1)
+                                }
+                                .frame(maxWidth: .infinity)
                             }
                         }
                     }
