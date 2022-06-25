@@ -16,9 +16,10 @@ struct SettingSheet: View {
                 HStack {
                     Image(systemName: "info.circle")
                         .foregroundColor(.blue)
-                    NavigationLink("About") {
-                        TermsOfService()
-                    }
+                    Text("About")
+                        .overlay(NavigationLink(destination: TermsOfService(), label: {
+                            EmptyView()
+                        }))
                 }
 
                 HStack {
