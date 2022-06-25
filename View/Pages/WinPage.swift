@@ -15,21 +15,21 @@ struct WinPage: View {
     @State private var _showSafeSuccessAlert: Bool = false
     @State private var _showNoNameAlert: Bool = false
     @EnvironmentObject private var _pilot: UIPilot<AppRoute>
-    
+
     var body: some View {
         VStack {
             Text("Congratulation!!!")
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding(10)
-            
+
             VStack {
                 Text("Cost Time")
                 Text(costTime)
                     .fontWeight(.bold)
             }
             .padding(10)
-            
+
             VStack {
                 Text("Please text in your name")
                 TextField("Your Name", text: $name, prompt: Text("YourName"))
@@ -38,10 +38,10 @@ struct WinPage: View {
                     .overlay(RoundedRectangle(cornerRadius: 40).stroke(Color.blue, lineWidth: 3))
             }
             .padding(10)
-            
-            Button{
+
+            Button {
                 // TODO: record the name and cost time
-                if (name != "") {
+                if name != "" {
                     _showSafeSuccessAlert = true
                 } else {
                     _showNoNameAlert = true
