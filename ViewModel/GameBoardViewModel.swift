@@ -131,6 +131,7 @@ class GameBoardViewModel: ObservableObject {
     }
     
     func revealAnswer() {
+        _puzzleNotes[_currentRowIndex][_currentColumnIndex].removeAll()
         for rowIndex in 0 ..< boardEdgeCount {
             for columnIndex in 0 ..< boardEdgeCount {
                 if isPuzzleCell(rowIndex: rowIndex, columnIndex: columnIndex) {
